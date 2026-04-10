@@ -43,10 +43,6 @@
 
     /* ========== NAVBAR ========== */
     .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
       background: var(--cream);
       position: sticky;
       top: 0;
@@ -57,6 +53,16 @@
 
     .navbar.scrolled {
       box-shadow: 0 2px 12px rgba(27, 42, 74, 0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
     }
 
     .navbar-brand {
@@ -148,46 +154,6 @@
       color: var(--gold);
     }
 
-    .nav-dropdown-toggle {
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-
-    .nav-submenu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border: 1px solid rgba(27, 42, 74, 0.1);
-      border-radius: 4px;
-      min-width: 180px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      display: none;
-      flex-direction: column;
-      margin-top: 0.5rem;
-      z-index: 1000;
-    }
-
-    .nav-submenu.active {
-      display: flex;
-    }
-
-    .nav-subitem {
-      color: var(--dark);
-      text-decoration: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      white-space: nowrap;
-    }
-
-    .nav-subitem:hover {
-      color: var(--gold);
-      background: rgba(201, 168, 76, 0.05);
-    }
-
     /* Language Selector */
     .nav-languages {
       position: relative;
@@ -262,6 +228,10 @@
 
     /* ========== MOBILE MENU ========== */
     @media (max-width: 768px) {
+      .nav-inner {
+        padding: 1rem 1.5rem;
+      }
+
       .menu-toggle {
         display: flex;
       }
@@ -281,7 +251,7 @@
       }
 
       .nav-menu.active {
-        max-height: 600px;
+        max-height: 500px;
       }
 
       .nav-main {
@@ -295,26 +265,6 @@
         width: 100%;
         padding: 1rem 2rem;
         border-bottom: 1px solid rgba(27, 42, 74, 0.05);
-      }
-
-      .nav-submenu {
-        position: static;
-        background: rgba(201, 168, 76, 0.05);
-        border: none;
-        box-shadow: none;
-        margin: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-      }
-
-      .nav-submenu.active {
-        max-height: 300px;
-      }
-
-      .nav-subitem {
-        padding: 0.75rem 3rem;
-        border: none;
       }
 
       .nav-languages {
@@ -637,12 +587,107 @@
       font-size: 0.9rem;
     }
 
+    /* ========== SUCCESS PAGE SPECIFIC ========== */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    main {
+      min-height: calc(100vh - 180px);
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 2rem;
+    }
+
+    .hero-thank-you {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .checkmark-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: white;
+      animation: bounce 0.8s ease-out;
+    }
+
+    @keyframes bounce {
+      0% { opacity: 0; transform: scale(0.3) translateY(20px); }
+      50% { opacity: 1; }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .thank-you-heading {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .thank-you-message {
+      font-size: 1.1rem;
+      color: var(--dark);
+      max-width: 660px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+
+    .calendar-section {
+      margin-bottom: 3rem;
+    }
+
+    .calendar-label {
+      font-size: 0.9rem;
+      color: var(--warm-gray);
+      margin-bottom: 1.5rem;
+      display: block;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    #cal-embed {
+      min-height: 600px;
+      background: white;
+      border: 1px solid rgba(27, 42, 74, 0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(27, 42, 74, 0.1);
+    }
+
+    .calendar-note {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--warm-gray);
+      margin-top: 2rem;
+      line-height: 1.6;
+    }
+
+    .calendar-note a {
+      color: var(--gold);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .calendar-note a:hover {
+      color: var(--gold-light);
+    }
+
     /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
-      .navbar {
-        padding: 1rem 1.5rem;
-      }
-
       .logo {
         font-size: 0.9rem;
       }
@@ -681,6 +726,27 @@
 
       .cta-button {
         padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      main {
+        padding: 2rem 1rem;
+      }
+
+      .thank-you-heading {
+        font-size: 1.8rem;
+      }
+
+      .thank-you-message {
+        font-size: 1rem;
+      }
+
+      #cal-embed {
+        min-height: 400px;
+        padding: 1rem;
+      }
+
+      .calendar-note {
         font-size: 0.9rem;
       }
     }
