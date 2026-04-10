@@ -34,7 +34,7 @@ Saludos,
 Frances Regina`
   },
   fr: {
-    subject: 'Merci de nous avoir contactés — Frances Regina',
+    subject: 'Merci de nous avoir contacté — Frances Regina',
     text: `Bonjour {name},
 
 Merci de nous avoir contactés. J'examine chaque candidature personnellement.
