@@ -1,35 +1,5 @@
-require('dotenv').config();
-const express = require('express');
-const nodemailer = require('nodemailer');
-const cors = require('cors');
+import nodemailer from 'nodemailer';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// ========== CORS CONFIG ==========
-const corsOptions = {
-  origin: ['https://francesregina.com', 'http://localhost:3000', 'http://localhost'],
-  methods: ['POST', 'GET', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
-};
-app.use(cors(corsOptions));
-app.use(express.json());
-
-// ========== EMAIL TRANSPORTER ==========
-const transporter = nodemailer.createTransport({
-  host: 'mail.francesregina.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: 'info@francesregina.com',
-    pass: process.env.EMAIL_PASSWORD
-  },
-  logger: true,
-  debug: true
-});
-
-// ========== AUTO-REPLY MESSAGES ==========
 const autoReplyMessages = {
   en: {
     subject: 'Thank you for reaching out — Frances Regina',
@@ -97,17 +67,35 @@ Frances Regina`
   }
 };
 
-// ========== TEST ENDPOINT ==========
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Server is running' });
+const transporter = nodemailer.createTransport({
+  host: 'mail.francesregina.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'info@francesregina.com',
+    pass: process.env.EMAIL_PASSWORD
+  }
 });
 
-// ========== CONTACT FORM ENDPOINT ==========
-app.post('/api/contact', async (req, res) => {
+export default async function handler(req, res) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', 'https://francesregina.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, message: 'Method not allowed' });
+  }
+
   try {
     const { name, email, message, language } = req.body;
 
-    // Validate inputs
     if (!name || !email || !message) {
       return res.status(400).json({ 
         success: false, 
@@ -118,16 +106,16 @@ app.post('/api/contact', async (req, res) => {
     const lang = language || 'en';
     const autoReply = autoReplyMessages[lang] || autoReplyMessages.en;
 
-    // ========== EMAIL 1: TO FRANCES ==========
+    // Email 1: To Frances
     const francesEmail = {
       from: 'info@francesregina.com',
       to: 'frances@francesregina.com',
-      subject: `New contact from Frances Regina website`,
+      subject: 'New contact from Frances Regina website',
       text: `Name: ${name}\nEmail: ${email}\nLanguage: ${lang}\n\nMessage:\n${message}`,
       html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Language:</strong> ${lang}</p><p><strong>Message:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>`
     };
 
-    // ========== EMAIL 2: AUTO-REPLY TO VISITOR ==========
+    // Email 2: Auto-reply to visitor
     const visitorEmail = {
       from: 'info@francesregina.com',
       to: email,
@@ -137,32 +125,19 @@ app.post('/api/contact', async (req, res) => {
     };
 
     // Send both emails
-    console.log(`[${new Date().toISOString()}] Sending email to Frances at frances@francesregina.com...`);
-    const francesResult = await transporter.sendMail(francesEmail);
-    console.log(`[${new Date().toISOString()}] Email to Frances sent. MessageID: ${francesResult.messageId}`);
+    await transporter.sendMail(francesEmail);
+    await transporter.sendMail(visitorEmail);
 
-    console.log(`[${new Date().toISOString()}] Sending auto-reply to visitor at ${email}...`);
-    const visitorResult = await transporter.sendMail(visitorEmail);
-    console.log(`[${new Date().toISOString()}] Auto-reply sent to visitor. MessageID: ${visitorResult.messageId}`);
-
-    res.json({ 
+    res.status(200).json({ 
       success: true, 
-      message: 'Emails sent successfully',
-      francesMsgId: francesResult.messageId,
-      visitorMsgId: visitorResult.messageId
+      message: 'Emails sent successfully'
     });
 
   } catch (error) {
-    console.error(`[${new Date().toISOString()}] Error sending emails:`, error);
+    console.error('Error sending emails:', error);
     res.status(500).json({ 
       success: false, 
       message: `Error: ${error.message}` 
     });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`✓ Server running on port ${PORT}`);
-  console.log(`✓ CORS enabled for: https://francesregina.com`);
-  console.log(`✓ Email transporter configured for: info@francesregina.com`);
-});
+}
