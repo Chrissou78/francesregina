@@ -533,6 +533,8 @@
     // ========== NAVBAR MENU TOGGLE ==========
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
+    const navAboutBtn = document.getElementById('navAboutBtn');
+    const navAboutSubmenu = document.getElementById('navAboutSubmenu');
     const langToggle = document.getElementById('langToggle');
     const langSubmenu = document.getElementById('langSubmenu');
     const langBtns = document.querySelectorAll('.lang-btn');
@@ -541,6 +543,15 @@
       menuToggle.classList.toggle('active');
       navMenu.classList.toggle('active');
     });
+
+    if (navAboutBtn) {
+      navAboutBtn.addEventListener('click', e => {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          navAboutSubmenu.classList.toggle('active');
+        }
+      });
+    }
 
     langToggle.addEventListener('click', e => {
       e.stopPropagation();
@@ -553,7 +564,7 @@
       }
     });
 
-    document.querySelectorAll('.nav-item').forEach(link => {
+    document.querySelectorAll('.nav-item, .nav-subitem').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
           menuToggle.classList.remove('active');
