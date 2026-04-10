@@ -1272,7 +1272,7 @@
       }[currentLanguage];
 
       try {
-        const response = await fetch('https://francesregina.onrender.com/api/contact', {
+        const response = await fetch('https://francesregina.vercel.app/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, message, language })
