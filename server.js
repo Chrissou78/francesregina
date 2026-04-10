@@ -5,8 +5,22 @@ require('dotenv').config();
 
 const app = express();
 
+// CORS Configuration - IMPORTANT FOR YOUR DOMAIN
+const corsOptions = {
+  origin: [
+    'https://francesregina.com',
+    'http://localhost:3000',
+    'http://localhost'
+  ],
+  methods: ['POST', 'GET', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+};
+
+// Apply CORS
+app.use(cors(corsOptions));
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -14,10 +28,19 @@ app.use(express.urlencoded({ extended: true }));
 const transporter = nodemailer.createTransport({
   host: 'mail.francesregina.com',
   port: 587,
-  secure: false, // true for 465, false for other ports
+  secure: false,
   auth: {
-    user: 'frances@francesregina.com',
+    user: 'info@francesregina.com',
     pass: process.env.EMAIL_PASSWORD || 'YOUR_EMAIL_PASSWORD_HERE'
+  }
+});
+
+// Verify connection
+transporter.verify(function(error, success) {
+  if (error) {
+    console.log('SMTP Connection Error:', error);
+  } else {
+    console.log('SMTP Server is ready to take messages');
   }
 });
 
@@ -48,9 +71,17 @@ app.post('/api/contact', async (req, res) => {
     const lang = language || 'en';
     const replyMsg = autoReplyMessages[lang];
 
-    // Email to Frances
+    // Validate inputs
+    if (!name || !email || !message) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Missing required fields' 
+      });
+    }
+
+    // Email to Frances (frances@francesregina.com)
     const francesEmail = {
-      from: 'frances@francesregina.com',
+      from: 'info@francesregina.com',
       to: 'frances@francesregina.com',
       subject: 'New contact from Frances Regina website',
       html: `
@@ -60,20 +91,25 @@ app.post('/api/contact', async (req, res) => {
         <p><strong>Language:</strong> ${lang.toUpperCase()}</p>
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, '<br>')}</p>
+        <hr>
+        <p><em>Sent from: francesregina.com contact form</em></p>
       `
     };
 
     // Auto-reply to visitor
     const visitorEmail = {
-      from: 'frances@francesregina.com',
+      from: 'info@francesregina.com',
       to: email,
       subject: replyMsg.subject,
-      text: replyMsg.text.replace('{name}', name)
+      text: replyMsg.text.replace('{name}', name),
+      replyTo: 'frances@francesregina.com'
     };
 
     // Send both emails
     await transporter.sendMail(francesEmail);
     await transporter.sendMail(visitorEmail);
+
+    console.log(`Emails sent - To Frances: ${francesEmail.to}, Auto-reply: ${email}`);
 
     res.json({ 
       success: true, 
@@ -90,12 +126,18 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Health check
+// Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'Frances Regina Contact Form API' });
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
 });
