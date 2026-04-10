@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - Frances Regina Blockchain Course</title>
+  <meta name="description" content="You're on the list. Let's schedule a time to talk about your goals and whether the blockchain course is right for you.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:        #1A2E4A;
+      --navy-deep:   #0F1D30;
+      --navy-mid:    #243D5C;
+      --navy-light:  #3A5878;
+      --gold:        #C9A84C;
+      --gold-light:  #E0C97A;
+      --cream:       #FAF5EE;
+      --cream-warm:  #F5EDE0;
+      --charcoal:    #111820;
+      --text-body:   #1E2D40;
+      --text-muted:  #5A6878;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: var(--text-body);
+      background-color: var(--cream);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 { font-family: 'Georgia', serif; font-weight: 400; line-height: 1.2; }
+
+    a { color: var(--navy-light); text-decoration: none; transition: color 0.3s ease; }
+    a:hover { color: var(--navy); }
+
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    @media (max-width: 768px) { }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250, 245, 238, 0.94);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26, 46, 74, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    nav.scrolled { box-shadow: 0 2px 18px rgba(15, 29, 48, 0.08); }
+
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; height: 62px;
+    }
+
+    .nav-logo { font-size: 1rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--navy); }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--navy); }
+
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--navy); margin: 5px 0; transition: all 0.3s ease; }
+
+    .lang-selector {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .lang-selector li {
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-selector li.active {
+      background: var(--navy);
+      color: var(--cream);
+    }
+
+    .lang-selector li:hover {
+      background: rgba(26, 46, 74, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .lang-selector { margin-left: 10px; margin-right: 0; }
+      .lang-selector li { font-size: 0.7rem; padding: 4px 8px; }
+      .nav-links {
+        display: none; position: absolute; top: 62px; left: 0; right: 0;
+        background: rgba(250, 245, 238, 0.98);
+        flex-direction: column; padding: 20px 24px; gap: 18px;
+        border-bottom: 1px solid rgba(26, 46, 74, 0.08);
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); }
+      .nav-toggle.open span:nth-child(2) { opacity: 0; }
+      .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -4px); }
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      min-height: calc(100vh - 62px); padding-top: 62px; display: flex; flex-direction: column;
+    }
+
+    .content-wrapper { flex: 1; padding: 80px 0; }
+
+    .hero-thank-you {
+      text-align: center; margin-bottom: 60px;
+    }
+
+    .checkmark-icon {
+      width: 80px; height: 80px; margin: 0 auto 36px;
+      background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; color: var(--navy-deep);
+      animation: bounce 1s ease-out;
+    }
+
+    @keyframes bounce {
+      0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(20px);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .thank-you-heading {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--navy);
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .thank-you-message {
+      font-size: 1.1rem;
+      color: var(--text-body);
+      max-width: 660px;
+      margin: 0 auto 60px;
+      line-height: 1.8;
+      opacity: 0.95;
+    }
+
+    /* ── CAL.COM EMBED ── */
+    .calendar-section {
+      margin-bottom: 56px;
+    }
+
+    .calendar-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--navy-light);
+      margin-bottom: 20px;
+      display: block;
+      text-align: center;
+    }
+
+    #cal-embed {
+      min-height: 600px;
+      background: var(--cream-warm);
+      border-radius: 4px;
+      padding: 20px;
+    }
+
+    .calendar-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 32px;
+      line-height: 1.6;
+    }
+
+    .calendar-note a {
+      color: var(--navy-light);
+      font-weight: 500;
+    }
+
+    .calendar-note a:hover {
+      color: var(--navy);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(250, 245, 238, 0.3);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .content-wrapper {
+        padding: 50px 0;
+      }
+
+      .thank-you-heading {
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+      }
+
+      .thank-you-message {
+        font-size: 1rem;
+        padding: 0 20px;
+      }
+
+      #cal-embed {
+        min-height: 400px;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" data-i18n="nav.logo">Frances Regina</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html#story" data-i18n="nav.about">About</a></li>
+        <li><a href="index.html#arc" data-i18n="nav.journey">The Journey</a></li>
+        <li><a href="index.html#work" data-i18n="nav.work">What I Do</a></li>
+        <li><a href="index.html#person" data-i18n="nav.person">Who I Am</a></li>
+        <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <ul class="lang-selector">
+        <li class="lang-option active" data-lang="en">EN</li>
+        <li class="lang-option" data-lang="es">ES</li>
+        <li class="lang-option" data-lang="fr">FR</li>
+        <li class="lang-option" data-lang="pt">PT</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="section-inner content-wrapper">
+      <div class="hero-thank-you">
+        <div class="checkmark-icon">✓</div>
+        <h1 class="thank-you-heading" data-i18n="success.title">You're on the list.</h1>
+        <p class="thank-you-message" data-i18n="success.message">
+          Thank you for reaching out. I review every application personally. Before we connect, go ahead and pick a time that works for you. This is a 20-minute conversation, no pressure, no pitch. We talk about your goals, your background, and whether this program is the right fit.
+        </p>
+      </div>
+
+      <div class="calendar-section">
+        <span class="calendar-label" data-i18n="success.calendar_label">Pick a Time</span>
+        <div id="cal-embed"></div>
+        <div class="calendar-note">
+          <span data-i18n="success.calendar_note_text">If no times work for you, email me directly at</span>
+          <a href="mailto:frances@francesregina.com">frances@francesregina.com</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Frances Regina. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ========== TRANSLATION SYSTEM ==========
+    const translations = {
+      en: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "About",
+        "nav.journey": "The Journey",
+        "nav.work": "What I Do",
+        "nav.person": "Who I Am",
+        "nav.contact": "Contact",
+        "success.title": "You're on the list.",
+        "success.message": "Thank you for reaching out. I review every application personally. Before we connect, go ahead and pick a time that works for you. This is a 20-minute conversation, no pressure, no pitch. We talk about your goals, your background, and whether this program is the right fit.",
+        "success.calendar_label": "Pick a Time",
+        "success.calendar_note_text": "If no times work for you, email me directly at"
+      },
+      es: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "Sobre mí",
+        "nav.journey": "Mi trayectoria",
+        "nav.work": "Qué hago",
+        "nav.person": "Quién soy",
+        "nav.contact": "Contacto",
+        "success.title": "Estás en la lista.",
+        "success.message": "Gracias por comunicarte. Reviso cada solicitud personalmente. Antes de que nos conectemos, adelante y elige una hora que te funcione. Esta es una conversación de 20 minutos, sin presión, sin discurso de ventas. Hablamos sobre tus objetivos, tu trasfondo y si este programa es el ajuste correcto.",
+        "success.calendar_label": "Elige una hora",
+        "success.calendar_note_text": "Si ninguna hora te funciona, envíame un correo electrónico directamente a"
+      },
+      fr: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "À propos",
+        "nav.journey": "Mon parcours",
+        "nav.work": "Ce que je fais",
+        "nav.person": "Qui je suis",
+        "nav.contact": "Contact",
+        "success.title": "Vous êtes sur la liste.",
+        "success.message": "Merci d'avoir pris contact. Je revise personnellement chaque demande. Avant de nous connecter, allez-y et choisissez une heure qui vous convient. C'est une conversation de 20 minutes, sans pression, sans discours de vente. Nous parlons de vos objectifs, de votre parcours et de savoir si ce programme est le bon ajustement.",
+        "success.calendar_label": "Choisissez une heure",
+        "success.calendar_note_text": "Si aucune heure ne vous convient, envoyez-moi directement un e-mail à"
+      },
+      pt: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "Sobre",
+        "nav.journey": "Minha jornada",
+        "nav.work": "O que faço",
+        "nav.person": "Quem sou",
+        "nav.contact": "Contato",
+        "success.title": "Você está na lista.",
+        "success.message": "Obrigada por entrar em contato. Reviso pessoalmente cada inscrição. Antes de nos conectarmos, vá em frente e escolha um horário que funcione para você. Esta é uma conversa de 20 minutos, sem pressão, sem discurso de vendas. Falamos sobre seus objetivos, seu histórico e se este programa é o ajuste certo.",
+        "success.calendar_label": "Escolha um horário",
+        "success.calendar_note_text": "Se nenhum horário funcionar para você, envie-me um e-mail diretamente para"
+      }
+    };
+
+    // Detect system language or get from localStorage
+    function getInitialLanguage() {
+      const stored = localStorage.getItem('selectedLanguage');
+      if (stored) return stored;
+      
+      const systemLang = navigator.language.split('-')[0];
+      const supported = ['en', 'es', 'fr', 'pt'];
+      return supported.includes(systemLang) ? systemLang : 'en';
+    }
+
+    let currentLanguage = getInitialLanguage();
+
+    // Update all translated elements
+    function updateLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('selectedLanguage', lang);
+      
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      
+      // Update active language button
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+    }
+
+    // Language selector event listeners
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', function() {
+        updateLanguage(this.getAttribute('data-lang'));
+      });
+    });
+
+    // Initialize language on page load
+    updateLanguage(currentLanguage);
+
+    // ========== CAL.COM EMBED ==========
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if(typeof namespace === "string"){
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", {origin:"https://cal.com"});
+    Cal("inline", {elementOrSelector:"#cal-embed", calLink:"francesregina"});
+
+    // ========== NAV SCROLL & MENU ==========
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    var toggle = document.querySelector('.nav-toggle');
+    var links = document.querySelector('.nav-links');
+
+    toggle.addEventListener('click', function() {
+      var open = links.classList.toggle('open');
+      toggle.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        toggle.classList.remove('open');
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

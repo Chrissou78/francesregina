@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frances Regina</title>
+  <meta name="description" content="Frances Regina. Brazilian-born, Cape Town-based. International trade, blockchain education, and a lot of curiosity along the way.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:        #1A2E4A;
+      --navy-deep:   #0F1D30;
+      --navy-mid:    #243D5C;
+      --navy-light:  #3A5878;
+      --gold:        #C9A84C;
+      --gold-light:  #E0C97A;
+      --cream:       #FAF5EE;
+      --cream-warm:  #F5EDE0;
+      --charcoal:    #111820;
+      --text-body:   #1E2D40;
+      --text-muted:  #5A6878;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: var(--text-body);
+      background-color: var(--cream);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 { font-family: 'Georgia', serif; font-weight: 400; line-height: 1.2; }
+
+    a { color: var(--navy-light); text-decoration: none; transition: color 0.3s ease; }
+    a:hover { color: var(--navy); }
+
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 96px 0; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--navy-light);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      color: var(--navy);
+      margin-bottom: 40px;
+      max-width: 680px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) { section { padding: 60px 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250, 245, 238, 0.94);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26, 46, 74, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    nav.scrolled { box-shadow: 0 2px 18px rgba(15, 29, 48, 0.08); }
+
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; height: 62px;
+    }
+
+    .nav-logo { font-size: 1rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--navy); }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--navy); }
+
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--navy); margin: 5px 0; transition: all 0.3s ease; }
+
+    .lang-selector {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+      margin-left: auto;
+      margin-right: 20px;
+    }
+
+    .lang-selector li {
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-selector li.active {
+      background: var(--navy);
+      color: var(--cream);
+    }
+
+    .lang-selector li:hover {
+      background: rgba(26, 46, 74, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .lang-selector { margin-right: 10px; margin-left: auto; }
+      .lang-selector li { font-size: 0.7rem; padding: 4px 8px; }
+      .nav-links {
+        display: none; position: absolute; top: 62px; left: 0; right: 0;
+        background: rgba(250, 245, 238, 0.98);
+        flex-direction: column; padding: 20px 24px; gap: 18px;
+        border-bottom: 1px solid rgba(26, 46, 74, 0.08);
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); }
+      .nav-toggle.open span:nth-child(2) { opacity: 0; }
+      .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -4px); }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(155deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-mid) 100%);
+      color: var(--cream); position: relative; overflow: hidden; padding-top: 62px;
+    }
+
+    #hero::before {
+      content: ''; position: absolute; top: -40%; right: -15%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    #hero::after {
+      content: ''; position: absolute; bottom: -30%; left: -10%;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(58, 88, 120, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 22px; opacity: 0.85; }
+
+    .hero-name { font-size: clamp(3.2rem, 9vw, 6rem); font-weight: 400; line-height: 1; margin-bottom: 28px; color: var(--cream); }
+
+    .hero-line { font-size: clamp(1rem, 2.2vw, 1.25rem); line-height: 1.7; color: rgba(250, 245, 238, 0.8); max-width: 500px; margin-bottom: 44px; font-style: italic; }
+
+    .btn {
+      display: inline-block; padding: 14px 36px;
+      background: var(--gold); color: var(--navy-deep);
+      font-family: 'Georgia', serif; font-size: 0.85rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: none; cursor: pointer; transition: all 0.3s ease;
+    }
+    .btn:hover { background: var(--gold-light); color: var(--navy-deep); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+    /* ── NUMBERS ── */
+    .numbers-bar { background: var(--navy); padding: 48px 0; }
+
+    .numbers-grid {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center;
+    }
+
+    .num-value { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 400; color: var(--gold-light); line-height: 1; margin-bottom: 6px; }
+    .num-label { font-size: 0.76rem; letter-spacing: 0.07em; color: rgba(250, 245, 238, 0.5); }
+
+    @media (max-width: 600px) { .numbers-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
+
+    /* ── ABOUT ── */
+    #story { background: var(--cream); }
+
+    .story-grid { display: grid; grid-template-columns: 340px 1fr; gap: 72px; align-items: start; }
+
+    .story-photo {
+      width: 100%; aspect-ratio: 3 / 4;
+      background: linear-gradient(150deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(250, 245, 238, 0.35); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      position: sticky; top: 90px;
+    }
+
+    .story-body p {
+      font-size: 1.04rem; color: var(--text-body); margin-bottom: 22px; max-width: 560px;
+    }
+    .story-body p.lead {
+      font-size: 1.15rem; color: var(--navy); font-style: italic; margin-bottom: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .story-photo { position: static; aspect-ratio: 16 / 9; }
+    }
+
+    /* ── JOURNEY / ARC ── */
+    #arc { background: var(--cream-warm); }
+
+    .arc-title { font-size: clamp(1.9rem, 3.5vw, 2.8rem); color: var(--navy); margin-bottom: 56px; max-width: 620px; }
+
+    .arc-item {
+      display: grid;
+      grid-template-columns: 150px 1px 1fr;
+      gap: 0 36px;
+      align-items: start;
+      padding-bottom: 48px;
+    }
+    .arc-item:last-child { padding-bottom: 0; }
+    .arc-item:last-child .arc-line { visibility: hidden; }
+
+    .arc-year {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--navy-light); padding-top: 4px; text-align: right;
+      white-space: nowrap;
+    }
+
+    .arc-line {
+      background: rgba(26, 46, 74, 0.12); width: 1px; align-self: stretch; position: relative;
+    }
+    .arc-line::before {
+      content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+    }
+
+    .arc-content { min-width: 0; }
+
+    .arc-content h3 { font-size: 1.12rem; color: var(--navy); margin-bottom: 8px; }
+    .arc-content p { font-size: 0.93rem; color: var(--text-muted); line-height: 1.75; }
+
+    @media (max-width: 640px) {
+      .arc-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding-left: 20px;
+        border-left: 1px solid rgba(26, 46, 74, 0.12);
+      }
+      .arc-line { display: none; }
+      .arc-year { text-align: left; white-space: normal; }
+    }
+
+    /* ── WHAT I DO ── */
+    #work { background: var(--navy-deep); }
+    #work .section-label { color: var(--gold-light); }
+    #work .section-title { color: var(--cream); max-width: 680px; }
+
+    .work-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
+
+    .work-card {
+      background: rgba(250, 245, 238, 0.05); border: 1px solid rgba(250, 245, 238, 0.09);
+      padding: 36px 28px; transition: all 0.35s ease;
+    }
+    .work-card:hover { background: rgba(250, 245, 238, 0.09); border-color: rgba(201, 168, 76, 0.3); transform: translateY(-3px); }
+
+    .work-num { font-size: 0.72rem; letter-spacing: 0.14em; color: var(--gold); margin-bottom: 18px; }
+    .work-card h3 { font-size: 1.3rem; color: var(--cream); margin-bottom: 14px; }
+    .work-card p { font-size: 0.92rem; color: rgba(250, 245, 238, 0.62); line-height: 1.75; margin-bottom: 24px; }
+
+    .btn-outline {
+      display: inline-block; padding: 10px 24px; border: 1px solid var(--gold);
+      color: var(--gold); font-family: 'Georgia', serif; font-size: 0.78rem;
+      letter-spacing: 0.07em; text-transform: uppercase; transition: all 0.3s ease;
+    }
+    .btn-outline:hover { background: var(--gold); color: var(--navy-deep); }
+
+    @media (max-width: 768px) { .work-cards { grid-template-columns: 1fr; } }
+
+    /* ── WHO I AM ── */
+    #person { background: var(--cream); }
+
+    .person-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 52px; margin-top: 40px; }
+
+    .person-tag { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy-light); margin-bottom: 10px; display: block; }
+    .person-block h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: 12px; }
+    .person-block p { font-size: 0.93rem; color: var(--text-muted); line-height: 1.75; }
+
+    @media (max-width: 768px) { .person-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+    /* ── CREDENTIALS ── */
+    .creds-strip { background: var(--navy); padding: 44px 0; }
+
+    .creds-label { text-align: center; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250, 245, 238, 0.32); margin-bottom: 28px; }
+
+    .creds-list {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 48px;
+    }
+
+    .cred { text-align: center; }
+    .cred-school { font-size: 0.88rem; color: var(--gold-light); line-height: 1.3; }
+    .cred-prog { font-size: 0.72rem; color: rgba(250, 245, 238, 0.38); margin-top: 3px; }
+
+    /* ── WHY ── */
+    #why { background: var(--cream-warm); text-align: center; }
+
+    .why-inner { max-width: 680px; margin: 0 auto; }
+
+    .why-big { font-size: clamp(2.8rem, 6vw, 4.2rem); color: var(--navy); line-height: 1; margin-bottom: 6px; }
+    .why-sublabel { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy-light); margin-bottom: 40px; }
+    .why-inner p { font-size: clamp(1.05rem, 1.8vw, 1.2rem); line-height: 1.85; color: var(--text-body); }
+    .why-inner .section-title { margin: 0 auto 32px; text-align: center; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy-deep); }
+    #contact .section-label { color: var(--gold-light); }
+    #contact .section-title { color: var(--cream); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 44px; }
+
+    .contact-copy p { font-size: 1.02rem; color: rgba(250, 245, 238, 0.68); margin-bottom: 28px; max-width: 380px; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+
+    .contact-link { display: inline-flex; align-items: center; gap: 10px; color: var(--gold-light); font-size: 0.92rem; transition: color 0.3s ease; }
+    .contact-link:hover { color: var(--gold); }
+    .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250, 245, 238, 0.38); }
+
+    .form-group input, .form-group textarea {
+      background: rgba(250, 245, 238, 0.06); border: 1px solid rgba(250, 245, 238, 0.12);
+      padding: 13px 15px; color: var(--cream); font-family: 'Georgia', serif; font-size: 0.98rem;
+      transition: border-color 0.3s ease; outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { min-height: 110px; resize: vertical; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(250, 245, 238, 0.22); }
+
+    .form-status {
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .form-status.success {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+      display: block;
+    }
+
+    .form-status.error {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      display: block;
+    }
+
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 44px; } }
+
+    footer { background: var(--charcoal); color: rgba(250, 245, 238, 0.3); text-align: center; padding: 28px 24px; font-size: 0.78rem; letter-spacing: 0.04em; }
+
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" data-i18n="nav.logo">Frances Regina</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#story" data-i18n="nav.about">About</a></li>
+        <li><a href="#arc" data-i18n="nav.journey">The Journey</a></li>
+        <li><a href="#work" data-i18n="nav.work">What I Do</a></li>
+        <li><a href="#person" data-i18n="nav.person">Who I Am</a></li>
+        <li><a href="blockchain-course.html" data-i18n="nav.course">Blockchain Course</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <ul class="lang-selector">
+        <li class="lang-option active" data-lang="en">EN</li>
+        <li class="lang-option" data-lang="es">ES</li>
+        <li class="lang-option" data-lang="fr">FR</li>
+        <li class="lang-option" data-lang="pt">PT</li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="section-inner hero-content">
+      <p class="hero-eyebrow fade-in" data-i18n="hero.tagline">Brazilian. Cape Town. 45 countries.</p>
+      <h1 class="hero-name fade-in">Frances<br>Regina</h1>
+      <p class="hero-line fade-in" data-i18n="hero.line">I tell people I work with technology. The real answer is longer. And better.</p>
+      <a href="#story" class="btn fade-in" data-i18n="hero.cta">Keep reading</a>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <div class="numbers-bar fade-in">
+    <div class="numbers-grid">
+      <div><p class="num-value">45+</p><p class="num-label" data-i18n="numbers.countries">Countries</p></div>
+      <div><p class="num-value">4</p><p class="num-label" data-i18n="numbers.languages">Languages</p></div>
+      <div><p class="num-value">3</p><p class="num-label" data-i18n="numbers.kids">Kids</p></div>
+      <div><p class="num-value">1</p><p class="num-label" data-i18n="numbers.belt">Black belt</p></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="story">
+    <div class="section-inner">
+      <div class="story-grid">
+        <div class="story-photo fade-in">
+          <img src="frances-photo.jpg" alt="Frances Regina at Consensus Hong Kong" style="width:100%; height:100%; object-fit:cover; display:block;">
+        </div>
+        <div class="story-body">
+          <span class="section-label fade-in" data-i18n="story.label">About</span>
+          <h2 class="section-title fade-in" data-i18n="story.title">Be curious. Learn a little of everything. You never know when you will use it.</h2>
+          <p class="lead fade-in" data-i18n="story.lead">That is what I tell teenagers when they ask for advice. It is also exactly how my life went.</p>
+          <p class="fade-in" data-i18n="story.p1">I am half Alagoana, half Gaucha. I started my career as a trainee at Moveis Carraro, a furniture manufacturer in southern Brazil. I did not walk in knowing what I wanted. I walked in curious. I worked my way up to Special Big Account Manager and Export Manager, won an international trade award, and shipped furniture to places I had never been. That is when the world opened up.</p>
+          <p class="fade-in" data-i18n="story.p2">I did my MBA in International Trade at FGV. Then I got curious about fashion, so I went to study luxury marketing at Instituto Marangoni in Paris. Then sustainability. Then blockchain. I kept following what interested me, and somewhere along the way it all connected. I use everything I studied in what I do today.</p>
+          <p class="fade-in" data-i18n="story.p3">In 2012 I moved to Cape Town. I opened the office for AF African Brazilian Trade. My name was on the door. I built trade routes between Brazil and Africa, container by container, relationship by relationship. I also wrote about that life. I had an article published in TAM Airlines' in-flight magazine about bringing my mother, Dona Cida, to see her first African lion.</p>
+          <p class="fade-in" data-i18n="story.p4">Blockchain found me when I was deep in trade and emerging markets. I saw exactly which problems it could solve because I had lived those problems. I teach blockchain independently, to professionals and institutions who want to understand the space. I also do fractional GTM at OnchainLabs, focused on Africa and Latin America. And I speak at conferences, translating a complicated industry into language people can actually use.</p>
+          <p class="fade-in" data-i18n="story.p5">I do all of this as a mother of three. Three kids, a dog, a full passport, and a to-do list that never ends. Both things are true at the same time. I stopped trying to separate them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE JOURNEY -->
+  <section id="arc">
+    <div class="section-inner">
+      <span class="section-label fade-in" data-i18n="arc.label">The Journey</span>
+      <h2 class="arc-title fade-in" data-i18n="arc.title">Every chapter was a question I decided to answer.</h2>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item1.year">Southern Brazil</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item1.title">Moveis Carraro</h3>
+          <p data-i18n="arc.item1.desc">Started as a trainee. Rose to Special Big Account Manager and Export Manager. Won an international trade award. Learned that business is built on trust, not paperwork.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item2.year">Brazil</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item2.title">FGV, MBA in International Trade</h3>
+          <p data-i18n="arc.item2.desc">Studied commerce, negotiation, and global markets. Graduated with a cohort of people who wanted to take Brazilian business to the world.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item3.year">California, USA</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item3.title">UC Irvine International Executive MBA</h3>
+          <p data-i18n="arc.item3.desc">Studied business and management alongside professionals from across the Americas. Got curious about what happens when different cultures try to build something together.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item4.year">Paris, France</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item4.title">Instituto Marangoni, Luxury Marketing</h3>
+          <p data-i18n="arc.item4.desc">Got curious about fashion and how desire is built. Walked out understanding that positioning, storytelling, and aspiration work the same way whether you are selling a handbag or a technology company.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item5.year">Cape Town, South Africa</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item5.title">AF African Brazilian Trade</h3>
+          <p data-i18n="arc.item5.desc">Opened the office. Built trade routes between Brazil and Africa. Represented furniture brands across the continent. Wrote about the life. Fell in love with a city and never left.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item6.year">Paris, 2022</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item6.title">Binance Blockchain Week</h3>
+          <p data-i18n="arc.item6.desc">One of the first major blockchain conferences. Walked in curious. Walked out knowing this was the space I needed to be in.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item7.year">Davos</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item7.title">World Woman Davos Agenda, Official Delegate</h3>
+          <p data-i18n="arc.item7.desc">Selected as an official delegate for the World Woman Davos Agenda, with Roland Berger as knowledge partner. The room where global policy gets shaped. I was in it.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item8.year">Cape Town</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item8.title">Africa Tech Festival</h3>
+          <p data-i18n="arc.item8.desc">Speaking and connecting at Africa's largest tech conference. The continent I live on, finally getting the attention it deserves in the global tech conversation.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item9.year">Hong Kong</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item9.title">Consensus Hong Kong</h3>
+          <p data-i18n="arc.item9.desc">One of the most important Web3 conferences in the world. Representing Africa and Latin America in a room full of Asia-Pacific builders and institutional players.</p>
+        </div>
+      </div>
+
+      <div class="arc-item fade-in">
+        <p class="arc-year" data-i18n="arc.item10.year">Now</p>
+        <div class="arc-line"></div>
+        <div class="arc-content">
+          <h3 data-i18n="arc.item10.title">Fractional GTM at OnchainLabs. Teaching blockchain independently.</h3>
+          <p data-i18n="arc.item10.desc">I help OnchainLabs go to market in Africa and Latin America. Separately, I teach blockchain and RWA tokenization to professionals and institutions who want to understand the space, not just hear about it.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
+  <section id="work">
+    <div class="section-inner">
+      <span class="section-label fade-in" data-i18n="work.label">What I Do</span>
+      <h2 class="section-title fade-in" data-i18n="work.title" style="color: var(--cream);">I help people understand blockchain. And I help companies do something with it.</h2>
+      <div class="work-cards">
+
+        <div class="work-card fade-in">
+          <p class="work-num">01</p>
+          <h3 data-i18n="work.card1.title">Blockchain Education</h3>
+          <p data-i18n="work.card1.desc">For professionals and institutions who want to understand what blockchain actually is, not what the headlines say it is. I teach from real experience in trade and emerging markets, not from slides.</p>
+          <a href="blockchain-course.html" class="btn-outline" data-i18n="work.card1.cta">Learn More</a>
+        </div>
+
+        <div class="work-card fade-in">
+          <p class="work-num">02</p>
+          <h3 data-i18n="work.card2.title">RWA Tokenization</h3>
+          <p data-i18n="work.card2.desc">Real world assets on-chain. Commodities, real estate, infrastructure in Africa and Latin America. I connect the physical economy to the digital one because I have worked in both.</p>
+          <a href="#contact" class="btn-outline" data-i18n="work.card2.cta">Get in touch</a>
+        </div>
+
+        <div class="work-card fade-in">
+          <p class="work-num">03</p>
+          <h3 data-i18n="work.card3.title">Fractional GTM</h3>
+          <p data-i18n="work.card3.desc">I work with companies entering blockchain markets, especially in Africa and Latin America. Strategy, partnerships, market entry. For markets that do not work like Silicon Valley.</p>
+          <a href="#contact" class="btn-outline" data-i18n="work.card3.cta">Get in touch</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO I AM -->
+  <section id="person">
+    <div class="section-inner">
+      <span class="section-label fade-in" data-i18n="person.label">Not Just Work</span>
+      <h2 class="section-title fade-in" data-i18n="person.title">The things that do not fit in a job title.</h2>
+      <div class="person-grid">
+
+        <div class="person-block fade-in">
+          <span class="person-tag" data-i18n="person.block1.tag">On the mat</span>
+          <h3 data-i18n="person.block1.title">Judo Black Belt</h3>
+          <p data-i18n="person.block1.desc">I competed and won. Judo teaches you to stay grounded when everything is off balance. That lesson shows up every day, in negotiations, in strategy, in motherhood.</p>
+        </div>
+
+        <div class="person-block fade-in">
+          <span class="person-tag" data-i18n="person.block2.tag">On the page</span>
+          <h3 data-i18n="person.block2.title">Published Writer</h3>
+          <p data-i18n="person.block2.desc">I wrote for TAM Airlines' in-flight magazine. A fish called kingklip tells you more about Cape Town than any brochure. I believe in the specific detail. That is where the truth lives.</p>
+        </div>
+
+        <div class="person-block fade-in">
+          <span class="person-tag" data-i18n="person.block3.tag">At the table</span>
+          <h3 data-i18n="person.block3.title">International Mediator</h3>
+          <p data-i18n="person.block3.desc">Certified in 2024 by the International Mediation Campus. Mediation and trade share the same skill: getting people who see the world differently to build something together anyway.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS -->
+  <div class="creds-strip fade-in">
+    <p class="creds-label" data-i18n="creds.label">Education & Certifications</p>
+    <div class="creds-list">
+      <div class="cred"><p class="cred-school">FGV</p><p class="cred-prog" data-i18n="creds.fgv">MBA, International Trade</p></div>
+      <div class="cred"><p class="cred-school">UC Irvine</p><p class="cred-prog" data-i18n="creds.ucirvine">International Executive MBA</p></div>
+      <div class="cred"><p class="cred-school">Berkeley Haas</p><p class="cred-prog" data-i18n="creds.berkeley">Global Social Entrepreneurship</p></div>
+      <div class="cred"><p class="cred-school">Instituto Marangoni, Paris</p><p class="cred-prog" data-i18n="creds.marangoni">Luxury Marketing</p></div>
+      <div class="cred"><p class="cred-school">Sustainable Fashion Academy</p><p class="cred-prog" data-i18n="creds.sfa">Sustainability Fundamentals</p></div>
+      <div class="cred"><p class="cred-school">USF Muma College</p><p class="cred-prog" data-i18n="creds.usf">Diversity, Equity & Inclusion</p></div>
+      <div class="cred"><p class="cred-school">Intl Mediation Campus</p><p class="cred-prog" data-i18n="creds.mediation">International Mediation, 2024</p></div>
+      <div class="cred"><p class="cred-school">World Woman Davos Agenda</p><p class="cred-prog" data-i18n="creds.davos">Official Delegate</p></div>
+    </div>
+  </div>
+
+  <!-- WHY IT MATTERS -->
+  <section id="why">
+    <div class="section-inner">
+      <div class="why-inner fade-in">
+        <span class="section-label" style="display:block; text-align:center;" data-i18n="why.label">Why It Matters</span>
+        <h2 class="section-title" style="text-align:center; margin: 0 auto 32px; max-width:560px;" data-i18n="why.title">The real opportunity in blockchain is not in Silicon Valley.</h2>
+        <p class="why-big">$16T</p>
+        <p class="why-sublabel" data-i18n="why.sublabel">Projected tokenized asset market by 2030</p>
+        <p data-i18n="why.desc">Most of that value will come from commodities, real estate, and infrastructure in Africa and Latin America. These are markets I know. I have been in the meetings where the deal falls apart because the infrastructure does not exist. Tokenization builds that infrastructure. I have spent my career at that intersection, and I am not done.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <span class="section-label fade-in" data-i18n="contact.label">Get in Touch</span>
+      <h2 class="section-title fade-in" data-i18n="contact.title">Let's talk.</h2>
+      <div class="contact-grid">
+        <div class="contact-copy fade-in">
+          <p data-i18n="contact.intro">Whether you want to understand blockchain, build a strategy for emerging markets, or just have a conversation, I am here.</p>
+          <div class="contact-links">
+            <a href="mailto:frances@francesregina.com" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+              frances@francesregina.com
+            </a>
+            <a href="https://www.linkedin.com/in/francesregina" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="form-status" id="formStatus"></div>
+          
+          <div class="form-group">
+            <label for="name" data-i18n="form.nameLabel">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="form.emailLabel">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message" data-i18n="form.messageLabel">Message</label>
+            <textarea id="message" name="message" placeholder="What would you like to discuss?" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn" id="submitBtn" data-i18n="form.submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Frances Regina. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ========== TRANSLATION SYSTEM ==========
+    const translations = {
+      en: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "About",
+        "nav.journey": "The Journey",
+        "nav.work": "What I Do",
+        "nav.person": "Who I Am",
+        "nav.course": "Blockchain Course",
+        "nav.contact": "Contact",
+        "hero.tagline": "Brazilian. Cape Town. 45 countries.",
+        "hero.line": "I tell people I work with technology. The real answer is longer. And better.",
+        "hero.cta": "Keep reading",
+        "numbers.countries": "Countries",
+        "numbers.languages": "Languages",
+        "numbers.kids": "Kids",
+        "numbers.belt": "Black belt",
+        "story.label": "About",
+        "story.title": "Be curious. Learn a little of everything. You never know when you will use it.",
+        "story.lead": "That is what I tell teenagers when they ask for advice. It is also exactly how my life went.",
+        "story.p1": "I am half Alagoana, half Gaucha. I started my career as a trainee at Moveis Carraro, a furniture manufacturer in southern Brazil. I did not walk in knowing what I wanted. I walked in curious. I worked my way up to Special Big Account Manager and Export Manager, won an international trade award, and shipped furniture to places I had never been. That is when the world opened up.",
+        "story.p2": "I did my MBA in International Trade at FGV. Then I got curious about fashion, so I went to study luxury marketing at Instituto Marangoni in Paris. Then sustainability. Then blockchain. I kept following what interested me, and somewhere along the way it all connected. I use everything I studied in what I do today.",
+        "story.p3": "In 2012 I moved to Cape Town. I opened the office for AF African Brazilian Trade. My name was on the door. I built trade routes between Brazil and Africa, container by container, relationship by relationship. I also wrote about that life. I had an article published in TAM Airlines' in-flight magazine about bringing my mother, Dona Cida, to see her first African lion.",
+        "story.p4": "Blockchain found me when I was deep in trade and emerging markets. I saw exactly which problems it could solve because I had lived those problems. I teach blockchain independently, to professionals and institutions who want to understand the space. I also do fractional GTM at OnchainLabs, focused on Africa and Latin America. And I speak at conferences, translating a complicated industry into language people can actually use.",
+        "story.p5": "I do all of this as a mother of three. Three kids, a dog, a full passport, and a to-do list that never ends. Both things are true at the same time. I stopped trying to separate them.",
+        "arc.label": "The Journey",
+        "arc.title": "Every chapter was a question I decided to answer.",
+        "arc.item1.year": "Southern Brazil",
+        "arc.item1.title": "Moveis Carraro",
+        "arc.item1.desc": "Started as a trainee. Rose to Special Big Account Manager and Export Manager. Won an international trade award. Learned that business is built on trust, not paperwork.",
+        "arc.item2.year": "Brazil",
+        "arc.item2.title": "FGV, MBA in International Trade",
+        "arc.item2.desc": "Studied commerce, negotiation, and global markets. Graduated with a cohort of people who wanted to take Brazilian business to the world.",
+        "arc.item3.year": "California, USA",
+        "arc.item3.title": "UC Irvine International Executive MBA",
+        "arc.item3.desc": "Studied business and management alongside professionals from across the Americas. Got curious about what happens when different cultures try to build something together.",
+        "arc.item4.year": "Paris, France",
+        "arc.item4.title": "Instituto Marangoni, Luxury Marketing",
+        "arc.item4.desc": "Got curious about fashion and how desire is built. Walked out understanding that positioning, storytelling, and aspiration work the same way whether you are selling a handbag or a technology company.",
+        "arc.item5.year": "Cape Town, South Africa",
+        "arc.item5.title": "AF African Brazilian Trade",
+        "arc.item5.desc": "Opened the office. Built trade routes between Brazil and Africa. Represented furniture brands across the continent. Wrote about the life. Fell in love with a city and never left.",
+        "arc.item6.year": "Paris, 2022",
+        "arc.item6.title": "Binance Blockchain Week",
+        "arc.item6.desc": "One of the first major blockchain conferences. Walked in curious. Walked out knowing this was the space I needed to be in.",
+        "arc.item7.year": "Davos",
+        "arc.item7.title": "World Woman Davos Agenda, Official Delegate",
+        "arc.item7.desc": "Selected as an official delegate for the World Woman Davos Agenda, with Roland Berger as knowledge partner. The room where global policy gets shaped. I was in it.",
+        "arc.item8.year": "Cape Town",
+        "arc.item8.title": "Africa Tech Festival",
+        "arc.item8.desc": "Speaking and connecting at Africa's largest tech conference. The continent I live on, finally getting the attention it deserves in the global tech conversation.",
+        "arc.item9.year": "Hong Kong",
+        "arc.item9.title": "Consensus Hong Kong",
+        "arc.item9.desc": "One of the most important Web3 conferences in the world. Representing Africa and Latin America in a room full of Asia-Pacific builders and institutional players.",
+        "arc.item10.year": "Now",
+        "arc.item10.title": "Fractional GTM at OnchainLabs. Teaching blockchain independently.",
+        "arc.item10.desc": "I help OnchainLabs go to market in Africa and Latin America. Separately, I teach blockchain and RWA tokenization to professionals and institutions who want to understand the space, not just hear about it.",
+        "work.label": "What I Do",
+        "work.title": "I help people understand blockchain. And I help companies do something with it.",
+        "work.card1.title": "Blockchain Education",
+        "work.card1.desc": "For professionals and institutions who want to understand what blockchain actually is, not what the headlines say it is. I teach from real experience in trade and emerging markets, not from slides.",
+        "work.card1.cta": "Learn More",
+        "work.card2.title": "RWA Tokenization",
+        "work.card2.desc": "Real world assets on-chain. Commodities, real estate, infrastructure in Africa and Latin America. I connect the physical economy to the digital one because I have worked in both.",
+        "work.card2.cta": "Get in touch",
+        "work.card3.title": "Fractional GTM",
+        "work.card3.desc": "I work with companies entering blockchain markets, especially in Africa and Latin America. Strategy, partnerships, market entry. For markets that do not work like Silicon Valley.",
+        "work.card3.cta": "Get in touch",
+        "person.label": "Not Just Work",
+        "person.title": "The things that do not fit in a job title.",
+        "person.block1.tag": "On the mat",
+        "person.block1.title": "Judo Black Belt",
+        "person.block1.desc": "I competed and won. Judo teaches you to stay grounded when everything is off balance. That lesson shows up every day, in negotiations, in strategy, in motherhood.",
+        "person.block2.tag": "On the page",
+        "person.block2.title": "Published Writer",
+        "person.block2.desc": "I wrote for TAM Airlines' in-flight magazine. A fish called kingklip tells you more about Cape Town than any brochure. I believe in the specific detail. That is where the truth lives.",
+        "person.block3.tag": "At the table",
+        "person.block3.title": "International Mediator",
+        "person.block3.desc": "Certified in 2024 by the International Mediation Campus. Mediation and trade share the same skill: getting people who see the world differently to build something together anyway.",
+        "creds.label": "Education & Certifications",
+        "creds.fgv": "MBA, International Trade",
+        "creds.ucirvine": "International Executive MBA",
+        "creds.berkeley": "Global Social Entrepreneurship",
+        "creds.marangoni": "Luxury Marketing",
+        "creds.sfa": "Sustainability Fundamentals",
+        "creds.usf": "Diversity, Equity & Inclusion",
+        "creds.mediation": "International Mediation, 2024",
+        "creds.davos": "Official Delegate",
+        "why.label": "Why It Matters",
+        "why.title": "The real opportunity in blockchain is not in Silicon Valley.",
+        "why.sublabel": "Projected tokenized asset market by 2030",
+        "why.desc": "Most of that value will come from commodities, real estate, and infrastructure in Africa and Latin America. These are markets I know. I have been in the meetings where the deal falls apart because the infrastructure does not exist. Tokenization builds that infrastructure. I have spent my career at that intersection, and I am not done.",
+        "contact.label": "Get in Touch",
+        "contact.title": "Let's talk.",
+        "contact.intro": "Whether you want to understand blockchain, build a strategy for emerging markets, or just have a conversation, I am here.",
+        "form.nameLabel": "Name",
+        "form.emailLabel": "Email",
+        "form.messageLabel": "Message",
+        "form.submit": "Send"
+      },
+      es: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "Sobre mí",
+        "nav.journey": "Mi trayectoria",
+        "nav.work": "Qué hago",
+        "nav.person": "Quién soy",
+        "nav.course": "Curso Blockchain",
+        "nav.contact": "Contacto",
+        "hero.tagline": "Brasileña. Ciudad del Cabo. 45 países.",
+        "hero.line": "La gente dice que trabajo con tecnología. La verdadera respuesta es más larga. Y mejor.",
+        "hero.cta": "Sigue leyendo",
+        "numbers.countries": "Países",
+        "numbers.languages": "Idiomas",
+        "numbers.kids": "Hijos",
+        "numbers.belt": "Cinturón negro",
+        "story.label": "Sobre mí",
+        "story.title": "Sé curioso. Aprende un poco de todo. Nunca sabes cuándo lo usarás.",
+        "story.lead": "Eso es lo que les digo a los adolescentes cuando me piden consejo. Es exactamente cómo fue mi vida.",
+        "story.p1": "Soy mitad Alagoana, mitad Gaúcha. Comencé mi carrera como aprendiz en Moveis Carraro, un fabricante de muebles en el sur de Brasil. No entré sabiendo qué quería. Entré con curiosidad. Ascendí hasta Gerente de Cuentas Especiales y Gerente de Exportación, gané un premio internacional de comercio y envié muebles a lugares que nunca había visitado. Así fue cuando el mundo se abrió.",
+        "story.p2": "Hice mi MBA en Comercio Internacional en FGV. Luego me interesé en la moda, así que fui a estudiar marketing de lujo al Instituto Marangoni en París. Luego sostenibilidad. Luego blockchain. Seguí lo que me interesaba, y en algún momento todo conectó. Uso todo lo que estudié en lo que hago hoy.",
+        "story.p3": "En 2012 me mudé a Ciudad del Cabo. Abrí la oficina para AF African Brazilian Trade. Mi nombre estaba en la puerta. Construí rutas comerciales entre Brasil y África, contenedor a contenedor, relación por relación. También escribí sobre esa vida. Tuve un artículo publicado en la revista de a bordo de TAM Airlines sobre llevar a mi madre, Dona Cida, a ver su primer león africano.",
+        "story.p4": "Blockchain me encontró cuando estaba profundamente en comercio e mercados emergentes. Vi exactamente qué problemas podría resolver porque había vivido esos problemas. Enseño blockchain de forma independiente, a profesionales e instituciones que quieren entender el espacio. También hago GTM fraccionado en OnchainLabs, enfocándome en África y América Latina. Y hablo en conferencias, traduciendo una industria complicada en lenguaje que la gente pueda usar.",
+        "story.p5": "Hago todo esto como madre de tres. Tres hijos, un perro, un pasaporte lleno, y una lista de tareas que nunca termina. Ambas cosas son verdad al mismo tiempo. Dejé de intentar separarlas.",
+        "arc.label": "Mi trayectoria",
+        "arc.title": "Cada capítulo fue una pregunta que decidí responder.",
+        "arc.item1.year": "Sur de Brasil",
+        "arc.item1.title": "Moveis Carraro",
+        "arc.item1.desc": "Comencé como aprendiz. Ascendí a Gerente de Cuentas Especiales y Gerente de Exportación. Gané un premio internacional de comercio. Aprendí que el negocio se construye sobre confianza, no sobre papeles.",
+        "arc.item2.year": "Brasil",
+        "arc.item2.title": "FGV, MBA en Comercio Internacional",
+        "arc.item2.desc": "Estudié comercio, negociación y mercados globales. Me gradué con una cohorte de personas que querían llevar el negocio brasileño al mundo.",
+        "arc.item3.year": "California, USA",
+        "arc.item3.title": "MBA Ejecutivo Internacional UC Irvine",
+        "arc.item3.desc": "Estudié negocios y administración junto a profesionales de toda América. Aprendí qué sucede cuando diferentes culturas intentan construir algo juntas.",
+        "arc.item4.year": "París, Francia",
+        "arc.item4.title": "Instituto Marangoni, Marketing de Lujo",
+        "arc.item4.desc": "Me interesé en la moda y cómo se construye el deseo. Aprendí que el posicionamiento, la narrativa y la aspiración funcionan igual, ya sea vendiendo un bolso o una empresa de tecnología.",
+        "arc.item5.year": "Ciudad del Cabo, Sudáfrica",
+        "arc.item5.title": "AF African Brazilian Trade",
+        "arc.item5.desc": "Abrí la oficina. Construí rutas comerciales entre Brasil y África. Representé marcas de muebles en todo el continente. Escribí sobre esa vida. Me enamoré de una ciudad y nunca me fui.",
+        "arc.item6.year": "París, 2022",
+        "arc.item6.title": "Binance Blockchain Week",
+        "arc.item6.desc": "Una de las primeras grandes conferencias de blockchain. Entré con curiosidad. Salí sabiendo que ese era el espacio donde necesitaba estar.",
+        "arc.item7.year": "Davos",
+        "arc.item7.title": "World Woman Davos Agenda, Delegada Oficial",
+        "arc.item7.desc": "Seleccionada como delegada oficial de la Agenda Mundial de Mujeres en Davos, con Roland Berger como socio de conocimiento. La sala donde se forma la política global. Yo estaba en ella.",
+        "arc.item8.year": "Ciudad del Cabo",
+        "arc.item8.title": "Festival de Tecnología de África",
+        "arc.item8.desc": "Hablando y conectando en la conferencia tecnológica más grande de África. El continente donde vivo, finalmente recibiendo la atención que merece en la conversación tecnológica global.",
+        "arc.item9.year": "Hong Kong",
+        "arc.item9.title": "Consensus Hong Kong",
+        "arc.item9.desc": "Una de las conferencias Web3 más importantes del mundo. Representando a África y América Latina en una sala llena de constructores y actores institucionales de Asia-Pacífico.",
+        "arc.item10.year": "Ahora",
+        "arc.item10.title": "GTM fraccionado en OnchainLabs. Enseñando blockchain independientemente.",
+        "arc.item10.desc": "Ayudo a OnchainLabs a entrar al mercado en África y América Latina. Por separado, enseño blockchain y tokenización de RWA a profesionales e instituciones que quieren entender el espacio.",
+        "work.label": "Qué hago",
+        "work.title": "Ayudo a las personas a entender blockchain. Y ayudo a las empresas a hacer algo con ello.",
+        "work.card1.title": "Educación en Blockchain",
+        "work.card1.desc": "Para profesionales e instituciones que quieren entender qué es realmente blockchain, no lo que los titulares dicen. Enseño desde la experiencia real en comercio y mercados emergentes.",
+        "work.card1.cta": "Más información",
+        "work.card2.title": "Tokenización de RWA",
+        "work.card2.desc": "Activos del mundo real en cadena. Materias primas, bienes raíces, infraestructura en África y América Latina. Conecto la economía física con la digital.",
+        "work.card2.cta": "Contacta conmigo",
+        "work.card3.title": "GTM fraccionado",
+        "work.card3.desc": "Trabajo con empresas que entran en mercados blockchain, especialmente en África y América Latina. Estrategia, alianzas, entrada al mercado.",
+        "work.card3.cta": "Contacta conmigo",
+        "person.label": "Más que trabajo",
+        "person.title": "Las cosas que no caben en un título de trabajo.",
+        "person.block1.tag": "En el tatami",
+        "person.block1.title": "Cinturón Negro de Judo",
+        "person.block1.desc": "Competí y gané. El judo te enseña a mantenerte firme cuando todo está desequilibrado. Esa lección aparece cada día, en negociaciones, estrategia, maternidad.",
+        "person.block2.tag": "En la página",
+        "person.block2.title": "Escritora Publicada",
+        "person.block2.desc": "Escribí para la revista de a bordo de TAM Airlines. Un pez llamado abadejo te dice más sobre Ciudad del Cabo que cualquier folleto. Creo en el detalle específico.",
+        "person.block3.tag": "En la mesa",
+        "person.block3.title": "Mediadora Internacional",
+        "person.block3.desc": "Certificada en 2024 por el Campus Internacional de Mediación. La mediación y el comercio comparten la misma habilidad: lograr que personas que ven el mundo diferente construyan algo juntas.",
+        "creds.label": "Educación y Certificaciones",
+        "creds.fgv": "MBA en Comercio Internacional",
+        "creds.ucirvine": "MBA Ejecutivo Internacional",
+        "creds.berkeley": "Emprendimiento Social Global",
+        "creds.marangoni": "Marketing de Lujo",
+        "creds.sfa": "Fundamentos de Sostenibilidad",
+        "creds.usf": "Diversidad, Equidad e Inclusión",
+        "creds.mediation": "Mediación Internacional, 2024",
+        "creds.davos": "Delegada Oficial",
+        "why.label": "Por qué importa",
+        "why.title": "La oportunidad real en blockchain no está en Silicon Valley.",
+        "why.sublabel": "Mercado de activos tokenizados proyectado para 2030",
+        "why.desc": "La mayoría de ese valor provendrá de materias primas, bienes raíces e infraestructura en África y América Latina. Estos son mercados que conozco. He estado en reuniones donde el trato se cae porque la infraestructura no existe. La tokenización construye esa infraestructura.",
+        "contact.label": "Ponte en contacto",
+        "contact.title": "Hablemos.",
+        "contact.intro": "Ya sea que quieras entender blockchain, construir una estrategia para mercados emergentes, o simplemente tener una conversación, estoy aquí.",
+        "form.nameLabel": "Nombre",
+        "form.emailLabel": "Correo electrónico",
+        "form.messageLabel": "Mensaje",
+        "form.submit": "Enviar"
+      },
+      fr: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "À propos",
+        "nav.journey": "Mon parcours",
+        "nav.work": "Ce que je fais",
+        "nav.person": "Qui je suis",
+        "nav.course": "Cours Blockchain",
+        "nav.contact": "Contact",
+        "hero.tagline": "Brésilienne. Le Cap. 45 pays.",
+        "hero.line": "Les gens disent que je travaille avec la technologie. La vraie réponse est plus longue. Et meilleure.",
+        "hero.cta": "Continuer la lecture",
+        "numbers.countries": "Pays",
+        "numbers.languages": "Langues",
+        "numbers.kids": "Enfants",
+        "numbers.belt": "Ceinture noire",
+        "story.label": "À propos",
+        "story.title": "Soyez curieux. Apprenez un peu de tout. On ne sait jamais quand on l'utilisera.",
+        "story.lead": "C'est ce que je dis aux adolescents quand ils me demandent des conseils. C'est exactement comment ma vie s'est déroulée.",
+        "story.p1": "Je suis moitié Alagoana, moitié Gaúcha. J'ai commencé ma carrière comme stagiaire chez Moveis Carraro, un fabricant de meubles dans le sud du Brésil. Je ne suis pas entrée en sachant ce que je voulais. Je suis entrée curieuse. J'ai grimpé jusqu'à Directrice des Grands Comptes et Directrice des Exportations, j'ai remporté un prix international du commerce et j'ai expédié des meubles dans des endroits où je n'avais jamais mis les pieds. C'est à ce moment que le monde s'est ouvert.",
+        "story.p2": "J'ai fait mon MBA en Commerce International à FGV. Puis j'ai été curieuse de la mode, j'ai donc étudié le marketing du luxe à l'Instituto Marangoni à Paris. Puis la durabilité. Puis la blockchain. J'ai suivi ce qui m'intéressait, et à un moment donné, tout s'est connecté. J'utilise tout ce que j'ai étudié dans ce que je fais aujourd'hui.",
+        "story.p3": "En 2012, j'ai déménagé au Cap. J'ai ouvert le bureau pour AF African Brazilian Trade. Mon nom était sur la porte. J'ai construit des routes commerciales entre le Brésil et l'Afrique, conteneur par conteneur, relation par relation. J'ai aussi écrit sur cette vie. J'ai publié un article dans le magazine de bord de TAM Airlines sur le fait de montrer à ma mère, Dona Cida, son premier lion africain.",
+        "story.p4": "La blockchain m'a trouvée quand j'étais profondément dans le commerce et les marchés émergents. J'ai vu exactement quels problèmes elle pourrait résoudre parce que j'avais vécu ces problèmes. J'enseigne la blockchain de manière indépendante, à des professionnels et des institutions qui veulent comprendre l'espace. Je fais également du GTM fractionné chez OnchainLabs, en me concentrant sur l'Afrique et l'Amérique latine. Et je parle à des conférences, traduisant une industrie compliquée en un langage que les gens peuvent réellement utiliser.",
+        "story.p5": "Je fais tout cela en tant que mère de trois enfants. Trois enfants, un chien, un passeport plein et une liste de tâches qui ne finit jamais. Les deux choses sont vraies en même temps. J'ai arrêté d'essayer de les séparer.",
+        "arc.label": "Mon parcours",
+        "arc.title": "Chaque chapitre était une question que j'ai décidé de répondre.",
+        "arc.item1.year": "Sud du Brésil",
+        "arc.item1.title": "Moveis Carraro",
+        "arc.item1.desc": "J'ai commencé comme stagiaire. J'ai grimpé à Directrice des Grands Comptes et Directrice des Exportations. J'ai remporté un prix international du commerce. J'ai appris que les affaires se construisent sur la confiance, pas sur le papier.",
+        "arc.item2.year": "Brésil",
+        "arc.item2.title": "FGV, MBA en Commerce International",
+        "arc.item2.desc": "J'ai étudié le commerce, la négociation et les marchés mondiaux. J'ai obtenu mon diplôme avec une cohorte de personnes qui voulaient apporter les affaires brésiliennes au monde.",
+        "arc.item3.year": "Californie, USA",
+        "arc.item3.title": "MBA Exécutif International UC Irvine",
+        "arc.item3.desc": "J'ai étudié les affaires et la gestion avec des professionnels de toute l'Amérique. J'ai découvert ce qui se passe quand différentes cultures essaient de construire quelque chose ensemble.",
+        "arc.item4.year": "Paris, France",
+        "arc.item4.title": "Instituto Marangoni, Marketing du Luxe",
+        "arc.item4.desc": "J'ai été curieuse de la mode et de la façon dont le désir se construit. J'ai compris que le positionnement, la narration et l'aspiration fonctionnent de la même manière, que vous vendiez un sac à main ou une entreprise technologique.",
+        "arc.item5.year": "Le Cap, Afrique du Sud",
+        "arc.item5.title": "AF African Brazilian Trade",
+        "arc.item5.desc": "J'ai ouvert le bureau. J'ai construit des routes commerciales entre le Brésil et l'Afrique. J'ai représenté des marques de meubles dans tout le continent. J'ai écrit sur cette vie. Je suis tombée amoureuse d'une ville et je ne l'ai jamais quittée.",
+        "arc.item6.year": "Paris, 2022",
+        "arc.item6.title": "Binance Blockchain Week",
+        "arc.item6.desc": "L'une des premières grandes conférences de blockchain. Je suis entrée curieuse. Je suis sortie sachant que c'était l'espace où je devais être.",
+        "arc.item7.year": "Davos",
+        "arc.item7.title": "Agenda Mondial des Femmes à Davos, Déléguée Officielle",
+        "arc.item7.desc": "Sélectionnée comme déléguée officielle de l'Agenda Mondial des Femmes à Davos, avec Roland Berger comme partenaire de connaissances. La salle où la politique mondiale se façonne. J'y étais.",
+        "arc.item8.year": "Le Cap",
+        "arc.item8.title": "Festival Technologique Africain",
+        "arc.item8.desc": "Parlant et connectant à la plus grande conférence technologique d'Afrique. Le continent sur lequel je vis, recevant enfin l'attention qu'il mérite dans la conversation technologique mondiale.",
+        "arc.item9.year": "Hong Kong",
+        "arc.item9.title": "Consensus Hong Kong",
+        "arc.item9.desc": "L'une des conférences Web3 les plus importantes du monde. Représentant l'Afrique et l'Amérique latine dans une salle pleine de constructeurs et d'acteurs institutionnels de l'Asie-Pacifique.",
+        "arc.item10.year": "Maintenant",
+        "arc.item10.title": "GTM fractionné chez OnchainLabs. Enseignement de la blockchain indépendant.",
+        "arc.item10.desc": "J'aide OnchainLabs à pénétrer le marché en Afrique et en Amérique latine. Séparément, j'enseigne la blockchain et la tokenisation RWA aux professionnels et institutions qui veulent comprendre l'espace.",
+        "work.label": "Ce que je fais",
+        "work.title": "J'aide les gens à comprendre la blockchain. Et j'aide les entreprises à faire quelque chose avec.",
+        "work.card1.title": "Éducation Blockchain",
+        "work.card1.desc": "Pour les professionnels et institutions qui veulent comprendre ce que la blockchain est réellement, pas ce que les titres disent. J'enseigne à partir de l'expérience réelle du commerce et des marchés émergents.",
+        "work.card1.cta": "En savoir plus",
+        "work.card2.title": "Tokenisation RWA",
+        "work.card2.desc": "Actifs du monde réel en chaîne. Matières premières, immobilier, infrastructure en Afrique et Amérique latine. Je connecte l'économie physique à la numérique.",
+        "work.card2.cta": "Contactez-moi",
+        "work.card3.title": "GTM Fractionné",
+        "work.card3.desc": "Je travaille avec des entreprises entrant sur les marchés blockchain, en particulier en Afrique et Amérique latine. Stratégie, partenariats, entrée marché.",
+        "work.card3.cta": "Contactez-moi",
+        "person.label": "Plus que du travail",
+        "person.title": "Les choses qui ne rentrent pas dans un titre de travail.",
+        "person.block1.tag": "Sur le tatami",
+        "person.block1.title": "Ceinture Noire de Judo",
+        "person.block1.desc": "J'ai participé et j'ai gagné. Le judo vous apprend à rester ancré quand tout est déséquilibré. Cette leçon apparaît chaque jour, dans les négociations, la stratégie, la maternité.",
+        "person.block2.tag": "Sur la page",
+        "person.block2.title": "Écrivaine Publiée",
+        "person.block2.desc": "J'ai écrit pour le magazine de bord de TAM Airlines. Un poisson appelé merluche vous en dit plus sur Le Cap qu'aucune brochure. Je crois aux détails spécifiques.",
+        "person.block3.tag": "À la table",
+        "person.block3.title": "Médiatrice Internationale",
+        "person.block3.desc": "Certifiée en 2024 par le Campus International de Médiation. La médiation et le commerce partagent la même compétence : amener des gens qui voient le monde différemment à construire quelque chose ensemble.",
+        "creds.label": "Éducation et Certifications",
+        "creds.fgv": "MBA en Commerce International",
+        "creds.ucirvine": "MBA Exécutif International",
+        "creds.berkeley": "Entrepreneuriat Social Global",
+        "creds.marangoni": "Marketing du Luxe",
+        "creds.sfa": "Fondamentaux de la Durabilité",
+        "creds.usf": "Diversité, Équité et Inclusion",
+        "creds.mediation": "Médiation Internationale, 2024",
+        "creds.davos": "Déléguée Officielle",
+        "why.label": "Pourquoi c'est important",
+        "why.title": "La réelle opportunité de la blockchain n'est pas à Silicon Valley.",
+        "why.sublabel": "Marché des actifs tokenisés projeté d'ici 2030",
+        "why.desc": "La majorité de cette valeur proviendra des matières premières, immobilier et infrastructure en Afrique et Amérique latine. Ce sont des marchés que je connais. J'ai participé à des réunions où l'affaire s'effrondre car l'infrastructure n'existe pas. La tokenisation construit cette infrastructure.",
+        "contact.label": "Restez en contact",
+        "contact.title": "Parlons.",
+        "contact.intro": "Que vous vouliez comprendre la blockchain, construire une stratégie pour les marchés émergents, ou simplement converser, je suis là.",
+        "form.nameLabel": "Nom",
+        "form.emailLabel": "Email",
+        "form.messageLabel": "Message",
+        "form.submit": "Envoyer"
+      },
+      pt: {
+        "nav.logo": "Frances Regina",
+        "nav.about": "Sobre",
+        "nav.journey": "Minha Jornada",
+        "nav.work": "O que Faço",
+        "nav.person": "Quem Sou",
+        "nav.course": "Curso Blockchain",
+        "nav.contact": "Contato",
+        "hero.tagline": "Brasileira. Cidade do Cabo. 45 países.",
+        "hero.line": "As pessoas dizem que trabalho com tecnologia. A resposta real é mais longa. E melhor.",
+        "hero.cta": "Continue lendo",
+        "numbers.countries": "Países",
+        "numbers.languages": "Idiomas",
+        "numbers.kids": "Filhos",
+        "numbers.belt": "Faixa preta",
+        "story.label": "Sobre",
+        "story.title": "Seja curioso. Aprenda um pouco de tudo. Nunca se sabe quando vai precisar.",
+        "story.lead": "É o que digo aos adolescentes quando me pedem conselho. É exatamente como foi minha vida.",
+        "story.p1": "Sou metade Alagoana, metade Gaúcha. Comecei minha carreira como estagiária na Moveis Carraro, uma fabricante de móveis no sul do Brasil. Não entrei sabendo o que queria. Entrei curiosa. Subi até Gerente de Grandes Contas e Gerente de Exportação, ganhei um prêmio internacional de comércio exterior, e enviei móveis para lugares que nunca havia visitado. Foi então que o mundo se abriu.",
+        "story.p2": "Fiz meu MBA em Comércio Internacional na FGV. Depois fiquei curiosa com moda, então fui estudar marketing de luxo no Instituto Marangoni em Paris. Depois sustentabilidade. Depois blockchain. Fui seguindo o que me interessava, e em algum momento tudo se conectou. Uso tudo que estudei no que faço hoje.",
+        "story.p3": "Em 2012 mudei para a Cidade do Cabo. Abri o escritório da AF African Brazilian Trade. Meu nome estava na porta. Construí rotas comerciais entre Brasil e África, contêiner a contêiner, relacionamento a relacionamento. Também escrevi sobre essa vida. Tive um artigo publicado na revista de bordo da TAM Airlines sobre levar minha mãe, Dona Cida, para ver seu primeiro leão africano.",
+        "story.p4": "Blockchain me encontrou quando eu estava mergulhada em comércio e mercados emergentes. Vi exatamente quais problemas ela poderia resolver porque tinha vivido esses problemas. Ensino blockchain de forma independente, para profissionais e instituições que querem entender o espaço. Também faço GTM fracionado na OnchainLabs, focado em África e América Latina. E falo em conferências, traduzindo uma indústria complicada em linguagem que as pessoas conseguem usar.",
+        "story.p5": "Faço tudo isso como mãe de três filhos. Três filhos, um cachorro, um passaporte cheio e uma lista de tarefas que nunca termina. As duas coisas são verdadeiras ao mesmo tempo. Parei de tentar separá-las.",
+        "arc.label": "Minha Jornada",
+        "arc.title": "Cada capítulo foi uma pergunta que decidi responder.",
+        "arc.item1.year": "Sul do Brasil",
+        "arc.item1.title": "Moveis Carraro",
+        "arc.item1.desc": "Comecei como estagiária. Subi até Gerente de Grandes Contas e Gerente de Exportação. Ganhei um prêmio internacional de comércio. Aprendi que negócios são construídos sobre confiança, não sobre papel.",
+        "arc.item2.year": "Brasil",
+        "arc.item2.title": "FGV, MBA em Comércio Internacional",
+        "arc.item2.desc": "Estudei comércio, negociação e mercados globais. Me formei com uma turma de pessoas que queriam levar os negócios brasileiros para o mundo.",
+        "arc.item3.year": "Califórnia, USA",
+        "arc.item3.title": "MBA Executivo Internacional UC Irvine",
+        "arc.item3.desc": "Estudei negócios e administração ao lado de profissionais de todas as Américas. Aprendi o que acontece quando diferentes culturas tentam construir algo juntas.",
+        "arc.item4.year": "Paris, França",
+        "arc.item4.title": "Instituto Marangoni, Marketing de Luxo",
+        "arc.item4.desc": "Fiquei curiosa sobre moda e como o desejo é construído. Entendi que posicionamento, narrativa e aspiração funcionam da mesma forma, quer você esteja vendendo uma bolsa ou uma empresa de tecnologia.",
+        "arc.item5.year": "Cidade do Cabo, África do Sul",
+        "arc.item5.title": "AF African Brazilian Trade",
+        "arc.item5.desc": "Abri o escritório. Construí rotas comerciais entre Brasil e África. Representei marcas de móveis por todo o continente. Escrevi sobre essa vida. Apaixonei por uma cidade e nunca saí dela.",
+        "arc.item6.year": "Paris, 2022",
+        "arc.item6.title": "Binance Blockchain Week",
+        "arc.item6.desc": "Uma das primeiras grandes conferências de blockchain. Entrei curiosa. Saí sabendo que esse era o espaço onde eu precisava estar.",
+        "arc.item7.year": "Davos",
+        "arc.item7.title": "World Woman Davos Agenda, Delegada Oficial",
+        "arc.item7.desc": "Selecionada como delegada oficial para a Agenda Mundial da Mulher em Davos, com Roland Berger como parceiro de conhecimento. A sala onde a política global é moldada. Eu estava lá.",
+        "arc.item8.year": "Cidade do Cabo",
+        "arc.item8.title": "Festival de Tecnologia da África",
+        "arc.item8.desc": "Falando e conectando na maior conferência de tecnologia da África. O continente onde vivo, finalmente recebendo a atenção que merece na conversa tecnológica global.",
+        "arc.item9.year": "Hong Kong",
+        "arc.item9.title": "Consensus Hong Kong",
+        "arc.item9.desc": "Uma das conferências Web3 mais importantes do mundo. Representando África e América Latina em uma sala cheia de construtores e atores institucionais da Ásia-Pacífico.",
+        "arc.item10.year": "Agora",
+        "arc.item10.title": "GTM fracionado na OnchainLabs. Ensinando blockchain de forma independente.",
+        "arc.item10.desc": "Ajudo a OnchainLabs a entrar no mercado em África e América Latina. Separadamente, ensino blockchain e tokenização de RWA para profissionais e instituições que querem entender o espaço.",
+        "work.label": "O que Faço",
+        "work.title": "Ajudo as pessoas a entender blockchain. E ajudo as empresas a fazer algo com isso.",
+        "work.card1.title": "Educação em Blockchain",
+        "work.card1.desc": "Para profissionais e instituições que querem entender o que blockchain realmente é, não o que os títulos dizem. Ensino a partir de experiência real em comércio e mercados emergentes.",
+        "work.card1.cta": "Saiba Mais",
+        "work.card2.title": "Tokenização RWA",
+        "work.card2.desc": "Ativos do mundo real em cadeia. Commodities, imóveis, infraestrutura em África e América Latina. Conecto a economia física à digital.",
+        "work.card2.cta": "Entre em contato",
+        "work.card3.title": "GTM Fracionado",
+        "work.card3.desc": "Trabalho com empresas entrando em mercados blockchain, especialmente em África e América Latina. Estratégia, parcerias, entrada no mercado.",
+        "work.card3.cta": "Entre em contato",
+        "person.label": "Mais que Trabalho",
+        "person.title": "As coisas que não cabem em um título de trabalho.",
+        "person.block1.tag": "No tatame",
+        "person.block1.title": "Faixa Preta de Judô",
+        "person.block1.desc": "Competir e vencer. Judô te ensina a se manter firme quando tudo está desequilibrado. Essa lição aparece todos os dias, em negociações, estratégia, maternidade.",
+        "person.block2.tag": "Na página",
+        "person.block2.title": "Escritora Publicada",
+        "person.block2.desc": "Escrevi para a revista de bordo da TAM Airlines. Um peixe chamado peixe-espada te diz mais sobre a Cidade do Cabo do que qualquer folheto. Acredito no detalhe específico.",
+        "person.block3.tag": "Na mesa",
+        "person.block3.title": "Mediadora Internacional",
+        "person.block3.desc": "Certificada em 2024 pelo Campus Internacional de Mediação. Mediação e comércio compartilham a mesma habilidade: fazer pessoas que veem o mundo diferente construir algo juntas.",
+        "creds.label": "Educação e Certificações",
+        "creds.fgv": "MBA em Comércio Internacional",
+        "creds.ucirvine": "MBA Executivo Internacional",
+        "creds.berkeley": "Empreendedorismo Social Global",
+        "creds.marangoni": "Marketing de Luxo",
+        "creds.sfa": "Fundamentos de Sustentabilidade",
+        "creds.usf": "Diversidade, Equidade e Inclusão",
+        "creds.mediation": "Mediação Internacional, 2024",
+        "creds.davos": "Delegada Oficial",
+        "why.label": "Por Que Importa",
+        "why.title": "A real oportunidade em blockchain não está em Silicon Valley.",
+        "why.sublabel": "Mercado de ativos tokenizados projetado para 2030",
+        "why.desc": "A maioria desse valor virá de commodities, imóveis e infraestrutura em África e América Latina. Esses são mercados que conheço. Estive em reuniões onde o negócio desaba porque a infraestrutura não existe. Tokenização constrói essa infraestrutura.",
+        "contact.label": "Entre em Contato",
+        "contact.title": "Vamos conversar.",
+        "contact.intro": "Quer entender blockchain, construir uma estratégia para mercados emergentes, ou apenas conversar, estou aqui.",
+        "form.nameLabel": "Nome",
+        "form.emailLabel": "E-mail",
+        "form.messageLabel": "Mensagem",
+        "form.submit": "Enviar"
+      }
+    };
+
+    // Detect system language or get from localStorage
+    function getInitialLanguage() {
+      const stored = localStorage.getItem('selectedLanguage');
+      if (stored) return stored;
+      
+      const systemLang = navigator.language.split('-')[0];
+      const supported = ['en', 'es', 'fr', 'pt'];
+      return supported.includes(systemLang) ? systemLang : 'en';
+    }
+
+    let currentLanguage = getInitialLanguage();
+
+    // Update all translated elements
+    function updateLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('selectedLanguage', lang);
+      
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = translations[lang][key];
+          } else {
+            el.textContent = translations[lang][key];
+          }
+        }
+      });
+      
+      // Update active language button
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+    }
+
+    // Language selector event listeners
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', function() {
+        updateLanguage(this.getAttribute('data-lang'));
+      });
+    });
+
+    // Initialize language on page load
+    updateLanguage(currentLanguage);
+
+    // ========== AUTO-REPLY MESSAGES BY LANGUAGE ==========
+    const autoReplyMessages = {
+      en: {
+        subject: "Thank you for reaching out",
+        text: "Hi {name},\n\nThank you for reaching out. I review every application personally. Before we connect, go ahead and pick a time that works for you. This is a 20-minute conversation, no pressure, no pitch. We talk about your goals, your background, and whether this program is the right fit.\n\nBook your time here: https://cal.com/francesregina\n\nLooking forward to it.\n\nBest regards,\nFrances Regina\nfrances@francesregina.com"
+      },
+      es: {
+        subject: "Gracias por ponerte en contacto",
+        text: "Hola {name},\n\nGracias por ponerte en contacto. Reviso cada solicitud personalmente. Antes de que nos conectemos, adelante y elige un horario que te funcione. Esta es una conversación de 20 minutos, sin presión, sin pitch. Hablamos sobre tus objetivos, tu trasfondo, y si este programa es el adecuado para ti.\n\nReserva tu tiempo aquí: https://cal.com/francesregina\n\nEspero hablar contigo.\n\nSaludos,\nFrances Regina\nfrances@francesregina.com"
+      },
+      fr: {
+        subject: "Merci de nous avoir contactés",
+        text: "Bonjour {name},\n\nMerci de nous avoir contactés. J'examine chaque candidature personnellement. Avant que nous nous connectons, allez-y et choisissez un moment qui vous convient. C'est une conversation de 20 minutes, sans pression, sans pitch. Nous parlons de vos objectifs, de votre parcours, et de savoir si ce programme vous convient.\n\nRéservez votre créneau ici: https://cal.com/francesregina\n\nJ'ai hâte de vous parler.\n\nCordialement,\nFrances Regina\nfrances@francesregina.com"
+      },
+      pt: {
+        subject: "Obrigada por entrar em contato",
+        text: "Oi {name},\n\nObrigada por entrar em contato. Reviso cada inscrição pessoalmente. Antes de nos conectarmos, vá em frente e escolha um horário que funcione para você. Esta é uma conversa de 20 minutos, sem pressão, sem pitch. Conversamos sobre seus objetivos, seu background, e se este programa é o ajuste certo para você.\n\nReserve seu horário aqui: https://cal.com/francesregina\n\nEspero conversar com você.\n\nAtenciosamente,\nFrances Regina\nfrances@francesregina.com"
+      }
+    };
+
+    // ========== SCROLL & MENU ========== 
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() { navbar.classList.toggle('scrolled', window.scrollY > 20); });
+
+    var toggle = document.querySelector('.nav-toggle');
+    var links = document.querySelector('.nav-links');
+
+    toggle.addEventListener('click', function() {
+      var open = links.classList.toggle('open');
+      toggle.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+
+    links.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ========== FORM HANDLING ==========
+    const form = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = currentLang === 'pt' ? 'Enviando...' : 
+                               currentLang === 'es' ? 'Enviando...' :
+                               currentLang === 'fr' ? 'Envoi...' : 'Sending...';
+
+      try {
+        // Send to your backend
+        const response = await fetch('https://YOUR_SERVER_URL/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+            language: currentLang
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Show success message
+          formStatus.textContent = currentLang === 'pt' ? 'Obrigada! Você receberá um e-mail em breve.' :
+                                  currentLang === 'es' ? '¡Gracias! Recibirás un correo pronto.' :
+                                  currentLang === 'fr' ? 'Merci! Vous recevrez un e-mail bientôt.' :
+                                  'Thank you! You\'ll receive an email soon.';
+          formStatus.classList.add('success');
+          formStatus.classList.remove('error');
+          formStatus.style.display = 'block';
+
+          // Reset form
+          form.reset();
+          
+          // Redirect after 2 seconds
+          setTimeout(() => {
+            window.location.href = 'https://francesregina.com/success.html';
+          }, 2000);
+        } else {
+          throw new Error(result.message);
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+        formStatus.textContent = currentLang === 'pt' ? 'Erro ao enviar. Tente novamente.' :
+                                currentLang === 'es' ? 'Error al enviar. Inténtelo de nuevo.' :
+                                currentLang === 'fr' ? 'Erreur lors de l\'envoi. Réessayez.' :
+                                'Error sending. Please try again.';
+        formStatus.classList.add('error');
+        formStatus.classList.remove('success');
+        formStatus.style.display = 'block';
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  </script>
+
+</body>
+</html>

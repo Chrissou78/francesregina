@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockchain Foundations | Frances Regina</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FAF5EE;
+    --dark: #1B2A4A;
+    --gold: #C9A84C;
+    --gold-light: #E0C97A;
+    --charcoal: #243554;
+    --warm-gray: #7A8089;
+    --soft-white: #F5EDE0;
+    --border: #DDD8CF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--dark);
+    background: var(--cream);
+    line-height: 1.75;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 0;
+    background: rgba(250,245,238,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Georgia', serif;
+    font-size: 18px; font-weight: 600; letter-spacing: 1px;
+    color: var(--dark); text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 28px; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--warm-gray); text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--dark); }
+  .nav-cta {
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 1px solid var(--gold); padding: 10px 24px;
+    transition: all 0.3s ease;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--soft-white); }
+
+  .lang-selector {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin-left: auto;
+  }
+
+  .lang-selector li {
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .lang-selector li.active {
+    background: var(--dark);
+    color: var(--soft-white);
+  }
+
+  .lang-selector li:hover {
+    background: rgba(27, 42, 74, 0.1);
+  }
+
+  /* Mobile nav */
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--dark); margin: 5px 0; transition: all 0.3s ease; }
+
+  @media (max-width: 768px) {
+    .lang-selector { margin-left: 10px; margin-right: 0; }
+    .lang-selector li { font-size: 10px; padding: 4px 8px; }
+    .nav-links {
+      display: none; position: absolute; top: 70px; left: 0; right: 0;
+      background: rgba(250, 245, 238, 0.98);
+      flex-direction: column; padding: 20px 40px; gap: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -4px); }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 140px 40px 100px;
+    text-align: center;
+    background: var(--dark);
+  }
+  .hero-content { max-width: 760px; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 48px;
+    margin-bottom: 48px; flex-wrap: wrap;
+  }
+  .hero-stat-item { text-align: center; }
+  .hero-stat-num {
+    font-family: 'Georgia', serif;
+    font-size: 48px; font-weight: 400; color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 12px; color: #8A95A5; letter-spacing: 1px;
+    text-transform: uppercase; margin-top: 8px;
+  }
+  .hero-tag {
+    font-size: 12px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Georgia', serif;
+    font-size: clamp(32px, 4.5vw, 48px); font-weight: 400; line-height: 1.25;
+    color: var(--soft-white); margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 17px; color: #8A95A5; max-width: 560px; margin: 0 auto 20px;
+    line-height: 1.8;
+  }
+  .hero .hero-source {
+    font-size: 11px; color: #5A6A80; margin-bottom: 48px;
+    font-style: italic;
+  }
+  .hero-disclaimer {
+    font-size: 13px; color: #8A95A5; margin-bottom: 40px;
+    font-weight: 500; letter-spacing: 0.5px;
+  }
+  .hero-cta {
+    display: inline-block;
+    font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--dark); background: var(--gold);
+    padding: 18px 48px; text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .hero-cta:hover { background: var(--gold-light); }
+  .hero-note {
+    font-size: 13px; color: #6B7A8E; margin-top: 20px;
+    font-style: italic;
+  }
+
+  /* PRIVACY BANNER */
+  .privacy-section {
+    background: var(--cream);
+    padding: 80px 40px;
+    text-align: center;
+  }
+  .privacy-section .container { max-width: 680px; }
+  .privacy-quote {
+    font-family: 'Georgia', serif;
+    font-size: clamp(20px, 2.8vw, 28px); font-weight: 400; line-height: 1.5;
+    color: var(--dark);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .privacy-sub {
+    font-size: 15px; color: var(--warm-gray); line-height: 1.7;
+    max-width: 520px; margin: 0 auto;
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .section-tag {
+    font-size: 12px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Georgia', serif;
+    font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; line-height: 1.3;
+    color: var(--dark); margin-bottom: 24px;
+  }
+  .section-text {
+    font-size: 16px; color: var(--warm-gray); line-height: 1.8;
+    max-width: 640px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--soft-white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: start; margin-top: 48px;
+  }
+  .about-stat {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .about-stat:first-child { border-top: 1px solid var(--border); }
+  .stat-number {
+    font-family: 'Georgia', serif;
+    font-size: 36px; font-weight: 400; color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 14px; color: var(--warm-gray); font-weight: 400;
+  }
+
+  /* ASSESSMENT */
+  .assessment { background: var(--cream); }
+  .assessment .container { max-width: 680px; }
+  .quiz-intro {
+    font-size: 16px; color: var(--warm-gray); line-height: 1.8;
+    margin-bottom: 40px; max-width: 580px;
+  }
+  .quiz-question { margin-bottom: 32px; }
+  .quiz-question p {
+    font-size: 15px; font-weight: 500; color: var(--dark);
+    margin-bottom: 14px;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px;
+    border: 1px solid var(--border); background: var(--soft-white);
+    cursor: pointer; transition: all 0.2s ease;
+    font-size: 14px; color: var(--dark);
+  }
+  .quiz-option:hover { border-color: var(--gold); }
+  .quiz-option.selected { border-color: var(--gold); background: rgba(196, 162, 101, 0.08); }
+  .quiz-option input[type="radio"] { display: none; }
+  .quiz-radio {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s;
+  }
+  .quiz-option.selected .quiz-radio { border-color: var(--gold); }
+  .quiz-option.selected .quiz-radio::after {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+  }
+  .quiz-submit {
+    display: inline-block; margin-top: 24px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 40px; background: var(--dark); color: var(--soft-white);
+    border: none; cursor: pointer; transition: background 0.3s;
+  }
+  .quiz-submit:hover { background: var(--charcoal); }
+  .quiz-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .quiz-result {
+    display: none; padding: 40px; text-align: center;
+    border: 1px solid var(--border);
+  }
+  .quiz-result.fit { border-color: var(--gold); background: rgba(196, 162, 101, 0.05); }
+  .quiz-result.not-fit { border-color: #ccc; background: #fafafa; }
+  .quiz-result h3 {
+    font-family: 'Georgia', serif;
+    font-size: 24px; font-weight: 400; margin-bottom: 12px;
+  }
+  .quiz-result p {
+    font-size: 15px; color: var(--warm-gray); line-height: 1.7;
+    max-width: 480px; margin: 0 auto;
+  }
+  .quiz-result .result-cta {
+    display: inline-block; margin-top: 24px;
+    font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 40px; text-decoration: none;
+    background: var(--dark); color: var(--soft-white);
+    transition: background 0.3s;
+  }
+  .quiz-result .result-cta:hover { background: var(--charcoal); }
+
+  /* CURRICULUM */
+  .curriculum { background: var(--soft-white); }
+  .week-grid { margin-top: 48px; }
+  .week-item {
+    display: grid; grid-template-columns: 80px 1fr; gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .week-num {
+    font-family: 'Georgia', serif;
+    font-size: 14px; color: var(--gold); font-weight: 500;
+    letter-spacing: 1px; padding-top: 4px;
+  }
+  .week-title {
+    font-size: 18px; font-weight: 500; color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .week-desc {
+    font-size: 14px; color: var(--warm-gray); line-height: 1.7;
+  }
+  .week-tag {
+    display: inline-block; margin-top: 8px;
+    font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 10px; border: 1px solid var(--gold); color: var(--gold);
+  }
+
+  /* FORMAT */
+  .format { background: var(--cream); }
+  .format-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+    margin-top: 48px;
+  }
+  .format-icon {
+    font-size: 28px; margin-bottom: 16px; color: var(--gold);
+  }
+  .format-title {
+    font-size: 16px; font-weight: 500; color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .format-desc {
+    font-size: 14px; color: var(--warm-gray); line-height: 1.7;
+  }
+
+  /* HOW IT WORKS */
+  .how-it-works { background: var(--dark); color: var(--soft-white); }
+  .how-it-works .section-tag { color: var(--gold); }
+  .how-it-works .section-title { color: var(--soft-white); }
+  .how-it-works .section-text { color: #8A95A5; }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    margin-top: 48px;
+  }
+  .step-item { text-align: center; }
+  .step-num {
+    font-family: 'Georgia', serif;
+    font-size: 40px; font-weight: 400; color: var(--gold);
+    margin-bottom: 16px; line-height: 1;
+  }
+  .step-title {
+    font-size: 15px; font-weight: 500; color: var(--soft-white);
+    margin-bottom: 8px;
+  }
+  .step-desc {
+    font-size: 13px; color: #8A95A5; line-height: 1.6;
+  }
+
+  /* DATA SECTION */
+  .data-section {
+    background: var(--dark);
+    padding: 80px 40px;
+  }
+
+  /* WAITLIST */
+  .waitlist {
+    background: linear-gradient(170deg, #EDE9E0 0%, var(--cream) 100%);
+    text-align: center;
+  }
+  .waitlist .section-text { margin: 0 auto 40px; }
+
+  .waitlist-form {
+    max-width: 480px; margin: 0 auto;
+  }
+  .form-row { margin-bottom: 16px; }
+  .form-row input, .form-row select {
+    width: 100%; padding: 16px 20px;
+    font-family: 'Georgia', 'Times New Roman', serif; font-size: 14px; font-weight: 300;
+    border: 1px solid var(--border); background: var(--soft-white);
+    color: var(--dark); outline: none;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+  .form-row input::placeholder { color: #B0B5BD; }
+  .form-row input:focus, .form-row select:focus { border-color: var(--gold); }
+  .form-row select { cursor: pointer; color: #8A95A5; }
+
+  .form-submit {
+    width: 100%; padding: 18px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    background: var(--dark); color: var(--soft-white); border: none;
+    cursor: pointer; transition: background 0.3s ease;
+  }
+  .form-submit:hover { background: var(--charcoal); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .women-note {
+    margin-top: 20px; padding: 16px 24px;
+    border: 1px solid var(--gold);
+    background: rgba(196, 162, 101, 0.04);
+    text-align: center;
+  }
+  .women-note p {
+    font-size: 13px; color: var(--warm-gray); line-height: 1.6;
+  }
+  .women-note .discount-code {
+    font-weight: 600; color: var(--gold); letter-spacing: 1px;
+  }
+
+  .form-note {
+    font-size: 12px; color: var(--warm-gray); margin-top: 16px;
+    font-style: italic;
+  }
+
+  .form-status {
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    display: none;
+  }
+
+  .form-status.success {
+    background: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+    display: block;
+  }
+
+  .form-status.error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    display: block;
+  }
+
+  .form-success {
+    display: none;
+    padding: 40px;
+    text-align: center;
+  }
+  .form-success .check {
+    font-size: 48px; margin-bottom: 16px; color: var(--gold);
+  }
+  .form-success h3 {
+    font-family: 'Georgia', serif;
+    font-size: 24px; font-weight: 400; margin-bottom: 12px;
+  }
+  .form-success p {
+    font-size: 14px; color: var(--warm-gray);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 40px;
+    background: var(--dark); color: #6B7A8E;
+    text-align: center; font-size: 13px;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+  .footer-name {
+    font-family: 'Georgia', serif;
+    font-size: 16px; color: var(--soft-white); margin-bottom: 8px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    section { padding: 72px 24px; }
+    .hero { padding: 120px 24px 80px; }
+    .hero-stats { gap: 32px; }
+    .hero-stat-num { font-size: 36px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .format-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .week-item { grid-template-columns: 60px 1fr; gap: 20px; }
+    .nav-inner { padding: 0 24px; }
+  }
+  @media (max-width: 480px) {
+    .hero-stats { flex-direction: column; gap: 24px; }
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" data-i18n="nav.logo">FRANCES REGINA</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="index.html#story" data-i18n="nav.about">About</a></li>
+      <li><a href="index.html#work" data-i18n="nav.work">What I Do</a></li>
+      <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+      <li><a href="#waitlist" class="nav-cta" data-i18n="nav.waitlist">Join the Waitlist</a></li>
+    </ul>
+    <ul class="lang-selector">
+      <li class="lang-option active" data-lang="en">EN</li>
+      <li class="lang-option" data-lang="es">ES</li>
+      <li class="lang-option" data-lang="fr">FR</li>
+      <li class="lang-option" data-lang="pt">PT</li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag" data-i18n="hero.tag">Private 1:1 Blockchain Education</div>
+    <h1 data-i18n="hero.title">Learn Blockchain Technology.<br>Privately. At Your Pace.</h1>
+    <p data-i18n="hero.desc">This is not a trading course. This is not a group program. This is one hour per week, just you and me, learning how blockchain technology works, where it applies, and what it means for your industry. In person or online. Your choice.</p>
+    <a href="#assessment" class="hero-cta" data-i18n="hero.cta">See If This Is For You</a>
+    <div class="hero-note" data-i18n="hero.note">Limited to 10 students per month.</div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-section">
+  <div class="container">
+    <div class="privacy-quote" data-i18n="privacy.quote">"I sit in boardrooms and policy meetings where blockchain comes up. I nod. But I don't fully understand it. And I don't know who to ask."</div>
+    <div class="privacy-sub" data-i18n="privacy.sub">I hear this from executives at Davos, from founders in Lagos, from investors in São Paulo. Blockchain involves your money, your strategy, your reputation. You deserve a private space to learn without judgment. That is what this program exists for.</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-tag" data-i18n="about.tag">Your Instructor</div>
+    <div class="section-title" data-i18n="about.title">Frances Regina</div>
+    <div class="section-text" data-i18n="about.p1">
+      My career started in cross-border trade, moving goods and capital between countries where infrastructure is thin and bureaucracy is thick. That background taught me something most Web3 builders miss: emerging markets don't need more whitepapers. They need rails that work.
+    </div>
+    <div class="section-text" style="margin-top: 16px;" data-i18n="about.p2">
+      Today I build blockchain infrastructure for intra-African trade using RWA tokenization and stablecoin corridors. I advise Web3 teams entering Africa and Latin America. And I teach. Privately. One person at a time. Because the executives, founders, and policy makers I meet at Davos and Token2049 all say the same thing: "I want to understand this, but I don't know who to ask."
+    </div>
+    <div class="section-text" style="margin-top: 16px;" data-i18n="about.p3">
+      Now you do.
+    </div>
+    <div class="about-grid">
+      <div>
+        <div class="about-stat">
+          <div class="stat-number">4</div>
+          <div class="stat-label" data-i18n="about.stat1">Languages. MBA in International Business.</div>
+        </div>
+        <div class="about-stat">
+          <div class="stat-number">15+</div>
+          <div class="stat-label" data-i18n="about.stat2">Countries across Africa, Latam, and Middle East</div>
+        </div>
+      </div>
+      <div>
+        <div class="about-stat">
+          <div class="stat-number">WEF</div>
+          <div class="stat-label" data-i18n="about.stat3">Davos 2026. Token2049. RWA Tokenization.</div>
+        </div>
+        <div class="about-stat">
+          <div class="stat-number">1:1</div>
+          <div class="stat-label" data-i18n="about.stat4">Every session. No group calls. No recordings sold.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<section class="assessment" id="assessment">
+  <div class="container">
+    <div class="section-tag" data-i18n="assessment.tag">Quick Assessment</div>
+    <div class="section-title" data-i18n="assessment.title">Is This Course For You?</div>
+    <div class="quiz-intro" data-i18n="assessment.intro">Answer four questions. Takes 30 seconds. This helps us both know if the course fits your goals.</div>
+
+    <div id="quizContainer">
+      <div class="quiz-question" data-q="1">
+        <p data-i18n="assessment.q1">1. What is your primary goal?</p>
+        <div class="quiz-options">
+          <label class="quiz-option" onclick="selectOption(this, 1, 'learn')">
+            <input type="radio" name="q1" value="learn">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q1a">I want to understand blockchain technology and how it applies to my industry</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 1, 'build')">
+            <input type="radio" name="q1" value="build">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q1b">I want to evaluate blockchain and AI for my business or organization</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 1, 'trade')">
+            <input type="radio" name="q1" value="trade">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q1c">I want to learn how to trade crypto and make money</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 1, 'advise')">
+            <input type="radio" name="q1" value="advise">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q1d">I need to advise clients or stakeholders on blockchain topics</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-question" data-q="2">
+        <p data-i18n="assessment.q2">2. What is your current blockchain knowledge?</p>
+        <div class="quiz-options">
+          <label class="quiz-option" onclick="selectOption(this, 2, 'none')">
+            <input type="radio" name="q2" value="none">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q2a">Starting from zero. I hear the word but I don't understand the technology.</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 2, 'some')">
+            <input type="radio" name="q2" value="some">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q2b">I have a general idea but gaps in my understanding</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 2, 'moderate')">
+            <input type="radio" name="q2" value="moderate">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q2c">I own crypto and use some tools, but want structured education</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 2, 'advanced')">
+            <input type="radio" name="q2" value="advanced">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q2d">I am already deep in crypto. I trade daily and follow charts.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-question" data-q="3">
+        <p data-i18n="assessment.q3">3. How would you describe your professional background?</p>
+        <div class="quiz-options">
+          <label class="quiz-option" onclick="selectOption(this, 3, 'exec')">
+            <input type="radio" name="q3" value="exec">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q3a">Executive, C-suite, or senior leadership</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 3, 'finance')">
+            <input type="radio" name="q3" value="finance">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q3b">Finance, law, commodities, real estate, or trade</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 3, 'founder')">
+            <input type="radio" name="q3" value="founder">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q3c">Entrepreneur, founder, or investor</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 3, 'gov')">
+            <input type="radio" name="q3" value="gov">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q3d">Government, policy, NGO, or international organization</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-question" data-q="4">
+        <p data-i18n="assessment.q4">4. Do you have 3 to 5 hours per week for 8 weeks?</p>
+        <div class="quiz-options">
+          <label class="quiz-option" onclick="selectOption(this, 4, 'yes')">
+            <input type="radio" name="q4" value="yes">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q4a">Yes. I am ready to commit the time.</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 4, 'flexible')">
+            <input type="radio" name="q4" value="flexible">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q4b">My schedule is tight, but I want a flexible pace</span>
+          </label>
+          <label class="quiz-option" onclick="selectOption(this, 4, 'no')">
+            <input type="radio" name="q4" value="no">
+            <span class="quiz-radio"></span>
+            <span data-i18n="assessment.q4c">I want something I do on my own time with no live sessions</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="quiz-submit" id="quizSubmit" onclick="showResult()" disabled data-i18n="assessment.submit">See My Results</button>
+    </div>
+
+    <div class="quiz-result fit" id="resultFit">
+      <h3 data-i18n="result.fit.title">This course was built for you.</h3>
+      <p data-i18n="result.fit.desc">Your goals align with what this program delivers: structured, private education on blockchain technology. No trading. No speculation. Real understanding you apply in your work.</p>
+      <a href="#waitlist" class="result-cta" data-i18n="result.fit.cta">Join the Waitlist</a>
+    </div>
+
+    <div class="quiz-result fit" id="resultMaybe">
+      <h3 data-i18n="result.maybe.title">This could work for you.</h3>
+      <p data-i18n="result.maybe.desc">You have some experience, and the course adapts to your level. The discovery call will help us decide together if this is the right fit and pace.</p>
+      <a href="#waitlist" class="result-cta" data-i18n="result.maybe.cta">Book a Discovery Call</a>
+    </div>
+
+    <div class="quiz-result not-fit" id="resultNoFit">
+      <h3 data-i18n="result.nofit.title">This course is not the right fit.</h3>
+      <p data-i18n="result.nofit.desc">This program focuses on understanding blockchain technology, not on trading strategies or daily crypto signals. If your primary interest shifts toward technology education in the future, you are welcome to come back.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum" id="curriculum">
+  <div class="container">
+    <div class="section-tag" data-i18n="curriculum.tag">The Curriculum</div>
+    <div class="section-title" data-i18n="curriculum.title">Eight Weeks. Zero to Confident.</div>
+    <div class="section-text" data-i18n="curriculum.desc">Each week includes a private 1-hour session (in person or online), curated reading, and between-session support. The pace adapts to you.</div>
+
+    <div class="week-grid">
+      <div class="week-item">
+        <div class="week-num">WEEK 01</div>
+        <div>
+          <div class="week-title" data-i18n="week.w1.title">Why Blockchain Exists</div>
+          <div class="week-desc" data-i18n="week.w1.desc">The problem it solves. Bitcoin, Ethereum, and the shift from centralized to decentralized systems. Real examples from Africa, Latin America, and the Middle East.</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 02</div>
+        <div>
+          <div class="week-title" data-i18n="week.w2.title">How Blockchain Works</div>
+          <div class="week-desc" data-i18n="week.w2.desc">Blocks, nodes, consensus. Public vs. private chains. Proof of Work vs. Proof of Stake. No code. Mental models only.</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 03</div>
+        <div>
+          <div class="week-title" data-i18n="week.w3.title">The Blockchain Ecosystem</div>
+          <div class="week-desc" data-i18n="week.w3.desc">Major chains. Tokens vs. coins. Smart contracts, DeFi, NFTs, DAOs. Where AI agents are starting to operate on-chain and what that means for your industry.</div>
+          <div class="week-tag">AI + Blockchain</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 04</div>
+        <div>
+          <div class="week-title" data-i18n="week.w4.title">Real-World Usage and Data</div>
+          <div class="week-desc" data-i18n="week.w4.desc">Adoption data by region. Trade finance, cross-border payments, land registries, supply chains. How AI is being used to verify and automate on-chain transactions in emerging markets.</div>
+          <div class="week-tag">AI + Blockchain</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 05</div>
+        <div>
+          <div class="week-title" data-i18n="week.w5.title">RWAs and Tokenization</div>
+          <div class="week-desc" data-i18n="week.w5.desc">Real-world assets on-chain. Commodities, real estate, art. Regulatory landscape. AI-powered asset valuation and compliance tools entering the space.</div>
+          <div class="week-tag">AI + Blockchain</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 06</div>
+        <div>
+          <div class="week-title" data-i18n="week.w6.title">Wallets and Safety</div>
+          <div class="week-desc" data-i18n="week.w6.desc">Hot vs. cold wallets. Hands-on setup. Seed phrases, private keys, recovery. Scam prevention. Security best practices.</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 07</div>
+        <div>
+          <div class="week-title" data-i18n="week.w7.title">Exchanges and First Steps</div>
+          <div class="week-desc" data-i18n="week.w7.desc">CEX vs. DEX. KYC and onboarding. Your first purchase. Order types. Reading a basic chart. Fees and spreads.</div>
+        </div>
+      </div>
+      <div class="week-item">
+        <div class="week-num">WEEK 08</div>
+        <div>
+          <div class="week-title" data-i18n="week.w8.title">Your Blockchain Future</div>
+          <div class="week-desc" data-i18n="week.w8.desc">Personal strategy. Staking and yield basics. Portfolio mindset. Where blockchain and AI are heading next. A written roadmap you leave with. Ongoing access to my network.</div>
+          <div class="week-tag">AI + Blockchain</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT -->
+<section class="format" id="format">
+  <div class="container">
+    <div class="section-tag" data-i18n="format.tag">The Experience</div>
+    <div class="section-title" data-i18n="format.title">Your Personal Trainer for Blockchain</div>
+    <div class="format-grid">
+      <div class="format-item">
+        <div class="format-icon">&#9670;</div>
+        <div class="format-title" data-i18n="format.item1.title">1 Hour Per Week. Your Choice.</div>
+        <div class="format-desc" data-i18n="format.item1.desc">In person or online. You pick the format that works for your life. Sessions are scheduled around your timezone and your calendar.</div>
+      </div>
+      <div class="format-item">
+        <div class="format-icon">&#9670;</div>
+        <div class="format-title" data-i18n="format.item2.title">Completely Private</div>
+        <div class="format-desc" data-i18n="format.item2.desc">No group calls. No recordings shared. No one else hears your questions. Blockchain involves money and strategy. Your learning stays between us.</div>
+      </div>
+      <div class="format-item">
+        <div class="format-icon">&#9670;</div>
+        <div class="format-title" data-i18n="format.item3.title">Between-Session Support</div>
+        <div class="format-desc" data-i18n="format.item3.desc">Direct access via WhatsApp or Telegram. Voice notes, quick questions, real-time support. You are never waiting until next week to get an answer.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="process">
+  <div class="container">
+    <div class="section-tag" data-i18n="process.tag">How It Works</div>
+    <div class="section-title" data-i18n="process.title">Four Steps to Get Started</div>
+    <div class="section-text" data-i18n="process.desc">This is a private, invitation-based program. Pricing and tier details are shared during your discovery call.</div>
+
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-title" data-i18n="process.step1.title">Take the Assessment</div>
+        <div class="step-desc" data-i18n="process.step1.desc">30 seconds. Four questions. Find out if this course fits your goals and background.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-title" data-i18n="process.step2.title">Join the Waitlist</div>
+        <div class="step-desc" data-i18n="process.step2.desc">Leave your details. I review every application personally. No bots. No auto-responses.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-title" data-i18n="process.step3.title">Discovery Call</div>
+        <div class="step-desc" data-i18n="process.step3.desc">A 20-minute conversation. We decide together if this is the right fit, pace, and tier for you.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <div class="step-title" data-i18n="process.step4.title">Begin Learning</div>
+        <div class="step-desc" data-i18n="process.step4.desc">Your first session is scheduled within a week of enrollment. Your blockchain education starts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY THIS MATTERS: DATA -->
+<section class="data-section">
+  <div class="container" style="text-align: center;">
+    <div class="section-tag" data-i18n="data.tag">Why This Matters</div>
+    <div class="section-title" style="color: var(--soft-white);" data-i18n="data.title">The education gap is real.</div>
+    <div class="hero-stats" style="margin-top: 40px; margin-bottom: 32px;">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">74%</div>
+        <div class="hero-stat-label" data-i18n="data.stat1">of crypto investors are men</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">6%</div>
+        <div class="hero-stat-label" data-i18n="data.stat2">of crypto leaders are women</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">4%</div>
+        <div class="hero-stat-label" data-i18n="data.stat3">of people globally use blockchain</div>
+      </div>
+    </div>
+    <p style="font-size: 16px; color: #8A95A5; max-width: 560px; margin: 0 auto 16px; line-height: 1.8;" data-i18n="data.desc">Blockchain is reshaping trade, finance, and governance across emerging markets. The people who need to understand it the most, executives, founders, investors, policy makers, are the least served by the current education options. Group courses don't offer privacy. YouTube doesn't offer structure. This program offers both.</p>
+    <p style="font-size: 11px; color: #5A6A80; font-style: italic;" data-i18n="data.source">Sources: CoinLaw 2026, WEF Global Gender Gap Report 2025, DemandSage Blockchain Adoption 2026</p>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <div class="container">
+    <div class="section-tag" data-i18n="waitlist.tag">Limited Enrollment</div>
+    <div class="section-title" data-i18n="waitlist.title">Join the Waitlist</div>
+    <div class="section-text" data-i18n="waitlist.desc">I take a maximum of 10 students per month to protect the quality of each experience. Leave your details and I will reach out personally to schedule a 20-minute discovery call.</div>
+
+    <div class="waitlist-form" id="waitlistForm">
+      <div class="form-status" id="formStatus"></div>
+      
+      <form id="theForm" action="https://formsubmit.co/frances@francesregina.com" method="POST">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Full name" data-i18n-placeholder="form.name" required>
+        </div>
+        <div class="form-row">
+          <input type="email" name="email" placeholder="Email address" data-i18n-placeholder="form.email" required>
+        </div>
+        <div class="form-row">
+          <input type="text" name="company" placeholder="Company or role (optional)" data-i18n-placeholder="form.company">
+        </div>
+        <div class="form-row">
+          <select name="location" required>
+            <option value="" disabled selected data-i18n="form.location_placeholder">Where are you based?</option>
+            <option value="africa" data-i18n="form.africa">Africa</option>
+            <option value="latam" data-i18n="form.latam">Latin America</option>
+            <option value="middle-east" data-i18n="form.middleeast">Middle East</option>
+            <option value="europe" data-i18n="form.europe">Europe</option>
+            <option value="north-america" data-i18n="form.northamerica">North America</option>
+            <option value="asia" data-i18n="form.asia">Asia</option>
+            <option value="other" data-i18n="form.other">Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <input type="text" name="referral" placeholder="How did you hear about this? (optional)" data-i18n-placeholder="form.referral">
+        </div>
+        
+        <!-- FormSubmit settings (hidden) -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://francesregina.com/success.html">
+        <input type="hidden" name="_autoresponse.subject" value="Thanks for applying to Blockchain Foundations!">
+        <input type="hidden" name="_autoresponse.text" value="Hi {name},
+
+Thank you for your interest in the Blockchain Foundations course.
+
+I've received your application and will review it personally. In the meantime, you can schedule your discovery call directly here: https://cal.com/francesregina
+
+Looking forward to our conversation.
+
+Best regards,
+Frances Regina">
+        
+        <button type="submit" class="form-submit" id="submitBtn" data-i18n="form.submit">Request a Discovery Call</button>
+      </form>
+
+      <div class="women-note">
+        <p data-i18n="waitlist.women">Women receive a 15% discount on all tiers. Use code <span class="discount-code">WOMEN15</span> or mention it during your discovery call.</p>
+      </div>
+
+      <div class="form-note" data-i18n="waitlist.note">Your information stays private. No spam. I reply within 48 hours.</div>
+    </div>
+
+    <div class="form-success" id="formSuccess">
+      <div class="check">&#10003;</div>
+      <h3 data-i18n="success.title">You're on the list.</h3>
+      <p data-i18n="success.desc">I'll be in touch within 48 hours to schedule your discovery call. Check your inbox. If you need to reach me directly: <a href="mailto:frances@francesregina.com" style="color: var(--gold);">frances@francesregina.com</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Frances Regina</div>
+  <p data-i18n="footer.tagline">Blockchain Foundations. Technology education. Not trading advice.</p>
+  <p style="margin-top: 12px;"><a href="mailto:frances@francesregina.com">frances@francesregina.com</a></p>
+  <p style="margin-top: 8px;"><a href="index.html" data-i18n="footer.website">francesregina.com</a> &nbsp;|&nbsp; <a href="https://www.benskglobal.com" target="_blank">Bensk Global</a> &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/francesregina/" target="_blank">LinkedIn</a></p>
+  <p style="margin-top: 16px; font-size: 11px; color: #5A6A80;">&copy; 2026 Frances Regina. All rights reserved.</p>
+</footer>
+
+<script>
+// ========== TRANSLATION SYSTEM ==========
+const translations = {
+  en: {
+    "nav.logo": "FRANCES REGINA",
+    "nav.home": "Home",
+    "nav.about": "About",
+    "nav.work": "What I Do",
+    "nav.contact": "Contact",
+    "nav.waitlist": "Join the Waitlist",
+    "hero.tag": "Private 1:1 Blockchain Education",
+    "hero.title": "Learn Blockchain Technology.\nPrivately. At Your Pace.",
+    "hero.desc": "This is not a trading course. This is not a group program. This is one hour per week, just you and me, learning how blockchain technology works, where it applies, and what it means for your industry. In person or online. Your choice.",
+    "hero.cta": "See If This Is For You",
+    "hero.note": "Limited to 10 students per month.",
+    "privacy.quote": "\"I sit in boardrooms and policy meetings where blockchain comes up. I nod. But I don't fully understand it. And I don't know who to ask.\"",
+    "privacy.sub": "I hear this from executives at Davos, from founders in Lagos, from investors in São Paulo. Blockchain involves your money, your strategy, your reputation. You deserve a private space to learn without judgment. That is what this program exists for.",
+    "about.tag": "Your Instructor",
+    "about.title": "Frances Regina",
+    "about.p1": "My career started in cross-border trade, moving goods and capital between countries where infrastructure is thin and bureaucracy is thick. That background taught me something most Web3 builders miss: emerging markets don't need more whitepapers. They need rails that work.",
+    "about.p2": "Today I build blockchain infrastructure for intra-African trade using RWA tokenization and stablecoin corridors. I advise Web3 teams entering Africa and Latin America. And I teach. Privately. One person at a time. Because the executives, founders, and policy makers I meet at Davos and Token2049 all say the same thing: \"I want to understand this, but I don't know who to ask.\"",
+    "about.p3": "Now you do.",
+    "about.stat1": "Languages. MBA in International Business.",
+    "about.stat2": "Countries across Africa, Latam, and Middle East",
+    "about.stat3": "Davos 2026. Token2049. RWA Tokenization.",
+    "about.stat4": "Every session. No group calls. No recordings sold.",
+    "assessment.tag": "Quick Assessment",
+    "assessment.title": "Is This Course For You?",
+    "assessment.intro": "Answer four questions. Takes 30 seconds. This helps us both know if the course fits your goals.",
+    "assessment.q1": "1. What is your primary goal?",
+    "assessment.q1a": "I want to understand blockchain technology and how it applies to my industry",
+    "assessment.q1b": "I want to evaluate blockchain and AI for my business or organization",
+    "assessment.q1c": "I want to learn how to trade crypto and make money",
+    "assessment.q1d": "I need to advise clients or stakeholders on blockchain topics",
+    "assessment.q2": "2. What is your current blockchain knowledge?",
+    "assessment.q2a": "Starting from zero. I hear the word but I don't understand the technology.",
+    "assessment.q2b": "I have a general idea but gaps in my understanding",
+    "assessment.q2c": "I own crypto and use some tools, but want structured education",
+    "assessment.q2d": "I am already deep in crypto. I trade daily and follow charts.",
+    "assessment.q3": "3. How would you describe your professional background?",
+    "assessment.q3a": "Executive, C-suite, or senior leadership",
+    "assessment.q3b": "Finance, law, commodities, real estate, or trade",
+    "assessment.q3c": "Entrepreneur, founder, or investor",
+    "assessment.q3d": "Government, policy, NGO, or international organization",
+    "assessment.q4": "4. Do you have 3 to 5 hours per week for 8 weeks?",
+    "assessment.q4a": "Yes. I am ready to commit the time.",
+    "assessment.q4b": "My schedule is tight, but I want a flexible pace",
+    "assessment.q4c": "I want something I do on my own time with no live sessions",
+    "assessment.submit": "See My Results",
+    "result.fit.title": "This course was built for you.",
+    "result.fit.desc": "Your goals align with what this program delivers: structured, private education on blockchain technology. No trading. No speculation. Real understanding you apply in your work.",
+    "result.fit.cta": "Join the Waitlist",
+    "result.maybe.title": "This could work for you.",
+    "result.maybe.desc": "You have some experience, and the course adapts to your level. The discovery call will help us decide together if this is the right fit and pace.",
+    "result.maybe.cta": "Book a Discovery Call",
+    "result.nofit.title": "This course is not the right fit.",
+    "result.nofit.desc": "This program focuses on understanding blockchain technology, not on trading strategies or daily crypto signals. If your primary interest shifts toward technology education in the future, you are welcome to come back.",
+    "curriculum.tag": "The Curriculum",
+    "curriculum.title": "Eight Weeks. Zero to Confident.",
+    "curriculum.desc": "Each week includes a private 1-hour session (in person or online), curated reading, and between-session support. The pace adapts to you.",
+    "week.w1.title": "Why Blockchain Exists",
+    "week.w1.desc": "The problem it solves. Bitcoin, Ethereum, and the shift from centralized to decentralized systems. Real examples from Africa, Latin America, and the Middle East.",
+    "week.w2.title": "How Blockchain Works",
+    "week.w2.desc": "Blocks, nodes, consensus. Public vs. private chains. Proof of Work vs. Proof of Stake. No code. Mental models only.",
+    "week.w3.title": "The Blockchain Ecosystem",
+    "week.w3.desc": "Major chains. Tokens vs. coins. Smart contracts, DeFi, NFTs, DAOs. Where AI agents are starting to operate on-chain and what that means for your industry.",
+    "week.w4.title": "Real-World Usage and Data",
+    "week.w4.desc": "Adoption data by region. Trade finance, cross-border payments, land registries, supply chains. How AI is being used to verify and automate on-chain transactions in emerging markets.",
+    "week.w5.title": "RWAs and Tokenization",
+    "week.w5.desc": "Real-world assets on-chain. Commodities, real estate, art. Regulatory landscape. AI-powered asset valuation and compliance tools entering the space.",
+    "week.w6.title": "Wallets and Safety",
+    "week.w6.desc": "Hot vs. cold wallets. Hands-on setup. Seed phrases, private keys, recovery. Scam prevention. Security best practices.",
+    "week.w7.title": "Exchanges and First Steps",
+    "week.w7.desc": "CEX vs. DEX. KYC and onboarding. Your first purchase. Order types. Reading a basic chart. Fees and spreads.",
+    "week.w8.title": "Your Blockchain Future",
+    "week.w8.desc": "Personal strategy. Staking and yield basics. Portfolio mindset. Where blockchain and AI are heading next. A written roadmap you leave with. Ongoing access to my network.",
+    "format.tag": "The Experience",
+    "format.title": "Your Personal Trainer for Blockchain",
+    "format.item1.title": "1 Hour Per Week. Your Choice.",
+    "format.item1.desc": "In person or online. You pick the format that works for your life. Sessions are scheduled around your timezone and your calendar.",
+    "format.item2.title": "Completely Private",
+    "format.item2.desc": "No group calls. No recordings shared. No one else hears your questions. Blockchain involves money and strategy. Your learning stays between us.",
+    "format.item3.title": "Between-Session Support",
+    "format.item3.desc": "Direct access via WhatsApp or Telegram. Voice notes, quick questions, real-time support. You are never waiting until next week to get an answer.",
+    "process.tag": "How It Works",
+    "process.title": "Four Steps to Get Started",
+    "process.desc": "This is a private, invitation-based program. Pricing and tier details are shared during your discovery call.",
+    "process.step1.title": "Take the Assessment",
+    "process.step1.desc": "30 seconds. Four questions. Find out if this course fits your goals and background.",
+    "process.step2.title": "Join the Waitlist",
+    "process.step2.desc": "Leave your details. I review every application personally. No bots. No auto-responses.",
+    "process.step3.title": "Discovery Call",
+    "process.step3.desc": "A 20-minute conversation. We decide together if this is the right fit, pace, and tier for you.",
+    "process.step4.title": "Begin Learning",
+    "process.step4.desc": "Your first session is scheduled within a week of enrollment. Your blockchain education starts.",
+    "data.tag": "Why This Matters",
+    "data.title": "The education gap is real.",
+    "data.stat1": "of crypto investors are men",
+    "data.stat2": "of crypto leaders are women",
+    "data.stat3": "of people globally use blockchain",
+    "data.desc": "Blockchain is reshaping trade, finance, and governance across emerging markets. The people who need to understand it the most, executives, founders, investors, policy makers, are the least served by the current education options. Group courses don't offer privacy. YouTube doesn't offer structure. This program offers both.",
+    "data.source": "Sources: CoinLaw 2026, WEF Global Gender Gap Report 2025, DemandSage Blockchain Adoption 2026",
+    "waitlist.tag": "Limited Enrollment",
+    "waitlist.title": "Join the Waitlist",
+    "waitlist.desc": "I take a maximum of 10 students per month to protect the quality of each experience. Leave your details and I will reach out personally to schedule a 20-minute discovery call.",
+    "waitlist.women": "Women receive a 15% discount on all tiers. Use code WOMEN15 or mention it during your discovery call.",
+    "waitlist.note": "Your information stays private. No spam. I reply within 48 hours.",
+    "form.name": "Full name",
+    "form.email": "Email address",
+    "form.company": "Company or role (optional)",
+    "form.location_placeholder": "Where are you based?",
+    "form.africa": "Africa",
+    "form.latam": "Latin America",
+    "form.middleeast": "Middle East",
+    "form.europe": "Europe",
+    "form.northamerica": "North America",
+    "form.asia": "Asia",
+    "form.other": "Other",
+    "form.referral": "How did you hear about this? (optional)",
+    "form.submit": "Request a Discovery Call",
+    "success.title": "You're on the list.",
+    "success.desc": "I'll be in touch within 48 hours to schedule your discovery call. Check your inbox. If you need to reach me directly: frances@francesregina.com",
+    "footer.tagline": "Blockchain Foundations. Technology education. Not trading advice.",
+    "footer.website": "francesregina.com"
+  },
+  es: {
+    "nav.logo": "FRANCES REGINA",
+    "nav.home": "Inicio",
+    "nav.about": "Sobre mí",
+    "nav.work": "Qué hago",
+    "nav.contact": "Contacto",
+    "nav.waitlist": "Únete a la lista de espera",
+    "hero.tag": "Educación privada 1:1 en Blockchain",
+    "hero.title": "Aprende tecnología Blockchain.\nPrivadamente. A tu ritmo.",
+    "hero.desc": "Esto no es un curso de trading. No es un programa grupal. Es una hora por semana, solo tú y yo, aprendiendo cómo funciona la tecnología blockchain, dónde se aplica y qué significa para tu industria. Presencial u online. Tú eliges.",
+    "hero.cta": "Descubre si es para ti",
+    "hero.note": "Limitado a 10 estudiantes por mes.",
+    "privacy.quote": "\"Me siento en juntas directivas y reuniones de políticas donde blockchain surge. Asiento. Pero no lo entiendo completamente. Y no sé a quién preguntar.\"",
+    "privacy.sub": "Lo escucho de ejecutivos en Davos, de fundadores en Lagos, de inversionistas en São Paulo. Blockchain involucra tu dinero, tu estrategia, tu reputación. Mereces un espacio privado para aprender sin juzgarse. Para eso existe este programa.",
+    "about.tag": "Tu Instructor",
+    "about.title": "Frances Regina",
+    "about.p1": "Mi carrera comenzó en comercio transfronterizo, moviendo bienes y capital entre países donde la infraestructura es débil y la burocracia es espesa. Ese trasfondo me enseñó algo que la mayoría de constructores Web3 pierden: los mercados emergentes no necesitan más whitepappers. Necesitan sistemas que funcionen.",
+    "about.p2": "Hoy construyo infraestructura blockchain para comercio intra-africano usando tokenización de RWA y corredores de stablecoin. Asesoro a equipos Web3 que entran a África y América Latina. Y enseño. Privadamente. Una persona a la vez. Porque los ejecutivos, fundadores y tomadores de decisiones de política que conozco en Davos y Token2049 dicen lo mismo: \"Quiero entender esto, pero no sé a quién preguntarle.\"",
+    "about.p3": "Ahora lo sabes.",
+    "about.stat1": "Idiomas. MBA en Negocios Internacionales.",
+    "about.stat2": "Países en África, Latam y Oriente Medio",
+    "about.stat3": "Davos 2026. Token2049. Tokenización RWA.",
+    "about.stat4": "Cada sesión. Sin llamadas grupales. Sin grabaciones vendidas.",
+    "assessment.tag": "Evaluación rápida",
+    "assessment.title": "¿Es este curso para ti?",
+    "assessment.intro": "Responde cuatro preguntas. Toma 30 segundos. Esto nos ayuda a ambos a saber si el curso se ajusta a tus objetivos.",
+    "assessment.q1": "1. ¿Cuál es tu objetivo principal?",
+    "assessment.q1a": "Quiero entender la tecnología blockchain y cómo se aplica a mi industria",
+    "assessment.q1b": "Quiero evaluar blockchain e IA para mi negocio u organización",
+    "assessment.q1c": "Quiero aprender a tradear crypto y ganar dinero",
+    "assessment.q1d": "Necesito asesorar a clientes o partes interesadas sobre temas blockchain",
+    "assessment.q2": "2. ¿Cuál es tu conocimiento actual de blockchain?",
+    "assessment.q2a": "Comenzando desde cero. Escucho la palabra pero no entiendo la tecnología.",
+    "assessment.q2b": "Tengo una idea general pero tengo brechas en mi comprensión",
+    "assessment.q2c": "Tengo cripto y uso algunas herramientas, pero quiero educación estructurada",
+    "assessment.q2d": "Ya estoy profundamente en cripto. Tradeo diariamente y sigo gráficos.",
+    "assessment.q3": "3. ¿Cómo describirías tu trasfondo profesional?",
+    "assessment.q3a": "Ejecutivo, C-suite o liderazgo senior",
+    "assessment.q3b": "Finanzas, ley, commodities, bienes raíces o comercio",
+    "assessment.q3c": "Emprendedor, fundador o inversionista",
+    "assessment.q3d": "Gobierno, política, ONG u organización internacional",
+    "assessment.q4": "4. ¿Tienes 3 a 5 horas por semana durante 8 semanas?",
+    "assessment.q4a": "Sí. Estoy listo para comprometer el tiempo.",
+    "assessment.q4b": "Mi agenda es apretada, pero quiero un ritmo flexible",
+    "assessment.q4c": "Quiero algo que pueda hacer en mi propio tiempo sin sesiones en vivo",
+    "assessment.submit": "Ver mis resultados",
+    "result.fit.title": "Este curso fue hecho para ti.",
+    "result.fit.desc": "Tus objetivos se alinean con lo que este programa ofrece: educación estructurada y privada en tecnología blockchain. Sin trading. Sin especulación. Comprensión real que aplicas en tu trabajo.",
+    "result.fit.cta": "Únete a la lista de espera",
+    "result.maybe.title": "Esto podría funcionar para ti.",
+    "result.maybe.desc": "Tienes algo de experiencia, y el curso se adapta a tu nivel. La llamada de descubrimiento nos ayudará a decidir juntos si este es el ajuste y ritmo correcto.",
+    "result.maybe.cta": "Reserva una llamada de descubrimiento",
+    "result.nofit.title": "Este curso no es el ajuste correcto.",
+    "result.nofit.desc": "Este programa se enfoca en entender la tecnología blockchain, no en estrategias de trading o señales diarias de cripto. Si tu interés principal cambia hacia la educación tecnológica en el futuro, eres bienvenido a volver.",
+    "curriculum.tag": "El Currículum",
+    "curriculum.title": "Ocho semanas. De cero a confiado.",
+    "curriculum.desc": "Cada semana incluye una sesión privada de 1 hora (presencial u online), lectura curada y apoyo entre sesiones. El ritmo se adapta a ti.",
+    "week.w1.title": "Por qué existe Blockchain",
+    "week.w1.desc": "El problema que resuelve. Bitcoin, Ethereum y el cambio de sistemas centralizados a descentralizados. Ejemplos reales de África, América Latina y Oriente Medio.",
+    "week.w2.title": "Cómo funciona Blockchain",
+    "week.w2.desc": "Bloques, nodos, consenso. Cadenas públicas vs. privadas. Proof of Work vs. Proof of Stake. Sin código. Solo modelos mentales.",
+    "week.w3.title": "El ecosistema Blockchain",
+    "week.w3.desc": "Cadenas principales. Tokens vs. monedas. Contratos inteligentes, DeFi, NFTs, DAOs. Dónde los agentes de IA comienzan a operar en cadena y qué significa para tu industria.",
+    "week.w4.title": "Uso real y datos",
+    "week.w4.desc": "Datos de adopción por región. Financiamiento comercial, pagos transfronterizos, registros de tierras, cadenas de suministro. Cómo se usa la IA para verificar y automatizar transacciones en cadena en mercados emergentes.",
+    "week.w5.title": "RWAs y tokenización",
+    "week.w5.desc": "Activos del mundo real en cadena. Commodities, bienes raíces, arte. Panorama regulatorio. Herramientas de valoración de activos e cumplimiento impulsadas por IA que entran al espacio.",
+    "week.w6.title": "Billeteras y seguridad",
+    "week.w6.desc": "Billeteras calientes vs. frías. Configuración práctica. Frases de semilla, claves privadas, recuperación. Prevención de estafas. Mejores prácticas de seguridad.",
+    "week.w7.title": "Intercambios y primeros pasos",
+    "week.w7.desc": "CEX vs. DEX. KYC e incorporación. Tu primera compra. Tipos de órdenes. Leyendo un gráfico básico. Comisiones y diferenciales.",
+    "week.w8.title": "Tu futuro Blockchain",
+    "week.w8.desc": "Estrategia personal. Conceptos básicos de staking y rendimiento. Mentalidad de cartera. Hacia dónde van blockchain e IA. Una hoja de ruta escrita que llevas contigo. Acceso continuo a mi red.",
+    "format.tag": "La experiencia",
+    "format.title": "Tu entrenador personal para Blockchain",
+    "format.item1.title": "1 hora por semana. Tu elección.",
+    "format.item1.desc": "Presencial u online. Elige el formato que funcione para tu vida. Las sesiones se programan alrededor de tu zona horaria y tu calendario.",
+    "format.item2.title": "Completamente privado",
+    "format.item2.desc": "Sin llamadas grupales. Sin grabaciones compartidas. Nadie más escucha tus preguntas. Blockchain involucra dinero y estrategia. Tu aprendizaje se queda entre nosotros.",
+    "format.item3.title": "Apoyo entre sesiones",
+    "format.item3.desc": "Acceso directo vía WhatsApp o Telegram. Notas de voz, preguntas rápidas, apoyo en tiempo real. Nunca esperas hasta la próxima semana para obtener una respuesta.",
+    "process.tag": "Cómo funciona",
+    "process.title": "Cuatro pasos para comenzar",
+    "process.desc": "Este es un programa privado basado en invitación. Los detalles de precios y niveles se comparten durante tu llamada de descubrimiento.",
+    "process.step1.title": "Realiza la evaluación",
+    "process.step1.desc": "30 segundos. Cuatro preguntas. Descubre si este curso se ajusta a tus objetivos y trasfondo.",
+    "process.step2.title": "Únete a la lista de espera",
+    "process.step2.desc": "Deja tus datos. Reviso cada solicitud personalmente. Sin bots. Sin respuestas automáticas.",
+    "process.step3.title": "Llamada de descubrimiento",
+    "process.step3.desc": "Una conversación de 20 minutos. Decidimos juntos si este es el ajuste, ritmo y nivel correcto para ti.",
+    "process.step4.title": "Comienza a aprender",
+    "process.step4.desc": "Tu primera sesión se programa dentro de una semana de inscripción. Tu educación blockchain comienza.",
+    "data.tag": "Por qué importa",
+    "data.title": "La brecha educativa es real.",
+    "data.stat1": "de los inversores de cripto son hombres",
+    "data.stat2": "de los líderes cripto son mujeres",
+    "data.stat3": "de las personas globalmente usan blockchain",
+    "data.desc": "Blockchain está redefiniendo el comercio, finanzas y gobernanza en mercados emergentes. Las personas que más necesitan entenderlo, ejecutivos, fundadores, inversionistas, tomadores de políticas, son los menos servidos por las opciones educativas actuales. Los cursos grupales no ofrecen privacidad. YouTube no ofrece estructura. Este programa ofrece ambas.",
+    "data.source": "Fuentes: CoinLaw 2026, Reporte Global de Brecha de Género WEF 2025, Adopción de Blockchain DemandSage 2026",
+    "waitlist.tag": "Inscripción limitada",
+    "waitlist.title": "Únete a la lista de espera",
+    "waitlist.desc": "Tomo un máximo de 10 estudiantes por mes para proteger la calidad de cada experiencia. Deja tus datos y me comunicaré personalmente para programar una llamada de descubrimiento de 20 minutos.",
+    "waitlist.women": "Las mujeres reciben un descuento del 15% en todos los niveles. Usa el código WOMEN15 o menciónalo durante tu llamada de descubrimiento.",
+    "waitlist.note": "Tu información se mantiene privada. Sin spam. Respondo dentro de 48 horas.",
+    "form.name": "Nombre completo",
+    "form.email": "Correo electrónico",
+    "form.company": "Empresa o rol (opcional)",
+    "form.location_placeholder": "¿Dónde estás basado?",
+    "form.africa": "África",
+    "form.latam": "América Latina",
+    "form.middleeast": "Oriente Medio",
+    "form.europe": "Europa",
+    "form.northamerica": "América del Norte",
+    "form.asia": "Asia",
+    "form.other": "Otro",
+    "form.referral": "¿Cómo te enteraste de esto? (opcional)",
+    "form.submit": "Solicitar una llamada de descubrimiento",
+    "success.title": "Estás en la lista.",
+    "success.desc": "Me comunicaré dentro de 48 horas para programar tu llamada de descubrimiento. Revisa tu bandeja de entrada. Si necesitas contactarme directamente: frances@francesregina.com",
+    "footer.tagline": "Fundamentos de Blockchain. Educación tecnológica. No asesoramiento de trading.",
+    "footer.website": "francesregina.com"
+  },
+  fr: {
+    "nav.logo": "FRANCES REGINA",
+    "nav.home": "Accueil",
+    "nav.about": "À propos",
+    "nav.work": "Ce que je fais",
+    "nav.contact": "Contact",
+    "nav.waitlist": "Rejoindre la liste d'attente",
+    "hero.tag": "Éducation Blockchain privée 1:1",
+    "hero.title": "Apprenez la technologie Blockchain.\nPrivément. À votre rythme.",
+    "hero.desc": "Ce n'est pas un cours de trading. Ce n'est pas un programme de groupe. C'est une heure par semaine, juste vous et moi, apprenant comment la technologie blockchain fonctionne, où elle s'applique et ce qu'elle signifie pour votre industrie. En personne ou en ligne. Votre choix.",
+    "hero.cta": "Voyez si c'est pour vous",
+    "hero.note": "Limité à 10 étudiants par mois.",
+    "privacy.quote": "\"Je suis dans des salles de réunion et des réunions politiques où blockchain apparaît. Je hoche la tête. Mais je ne la comprends pas complètement. Et je ne sais pas à qui demander.\"",
+    "privacy.sub": "Je l'entends de la part d'cadres à Davos, de fondateurs à Lagos, d'investisseurs à São Paulo. La blockchain implique votre argent, votre stratégie, votre réputation. Vous méritez un espace privé pour apprendre sans jugement. C'est pour cela que ce programme existe.",
+    "about.tag": "Votre instructeur",
+    "about.title": "Frances Regina",
+    "about.p1": "Ma carrière a commencé dans le commerce transfrontalier, en déplaçant des biens et des capitaux entre des pays où l'infrastructure est mince et la bureaucratie est épaisse. Ce contexte m'a appris quelque chose que la plupart des constructeurs Web3 manquent : les marchés émergents n'ont pas besoin de plus de livres blancs. Ils ont besoin de systèmes qui fonctionnent.",
+    "about.p2": "Aujourd'hui, je construis une infrastructure blockchain pour le commerce intra-africain en utilisant la tokenisation RWA et les corridors de stablecoins. Je conseille les équipes Web3 entrant en Afrique et en Amérique latine. Et j'enseigne. Privément. Une personne à la fois. Parce que les cadres, fondateurs et décideurs politiques que je rencontre à Davos et Token2049 disent tous la même chose : \"Je veux comprendre cela, mais je ne sais pas à qui demander.\"",
+    "about.p3": "Maintenant, vous le savez.",
+    "about.stat1": "Langues. MBA en affaires internationales.",
+    "about.stat2": "Pays en Afrique, Amérique latine et Moyen-Orient",
+    "about.stat3": "Davos 2026. Token2049. Tokenisation RWA.",
+    "about.stat4": "Chaque session. Pas d'appels de groupe. Aucun enregistrement vendu.",
+    "assessment.tag": "Évaluation rapide",
+    "assessment.title": "Ce cours est-il pour vous?",
+    "assessment.intro": "Répondez à quatre questions. Cela prend 30 secondes. Cela nous aide tous les deux à savoir si le cours correspond à vos objectifs.",
+    "assessment.q1": "1. Quel est votre objectif principal?",
+    "assessment.q1a": "Je veux comprendre la technologie blockchain et comment elle s'applique à mon industrie",
+    "assessment.q1b": "Je veux évaluer la blockchain et l'IA pour mon entreprise ou organisation",
+    "assessment.q1c": "Je veux apprendre à trader la crypto et gagner de l'argent",
+    "assessment.q1d": "Je dois conseiller les clients ou les parties prenantes sur les sujets blockchain",
+    "assessment.q2": "2. Quelles sont vos connaissances actuelles en blockchain?",
+    "assessment.q2a": "À partir de zéro. J'entends le mot mais je ne comprends pas la technologie.",
+    "assessment.q2b": "J'ai une idée générale mais des lacunes dans ma compréhension",
+    "assessment.q2c": "Je possède de la crypto et j'utilise quelques outils, mais je veux une éducation structurée",
+    "assessment.q2d": "Je suis déjà profondément dans la crypto. Je trade quotidiennement et je suis les graphiques.",
+    "assessment.q3": "3. Comment décririez-vous vos antécédents professionnels?",
+    "assessment.q3a": "Cadre dirigeant, C-suite ou leadership senior",
+    "assessment.q3b": "Finance, droit, matières premières, immobilier ou commerce",
+    "assessment.q3c": "Entrepreneur, fondateur ou investisseur",
+    "assessment.q3d": "Gouvernement, politique, ONG ou organisation internationale",
+    "assessment.q4": "4. Avez-vous 3 à 5 heures par semaine pendant 8 semaines?",
+    "assessment.q4a": "Oui. Je suis prêt à consacrer le temps.",
+    "assessment.q4b": "Mon emploi du temps est serré, mais je veux un rythme flexible",
+    "assessment.q4c": "Je veux quelque chose que je fais à mon rythme sans sessions en direct",
+    "assessment.submit": "Voir mes résultats",
+    "result.fit.title": "Ce cours a été construit pour vous.",
+    "result.fit.desc": "Vos objectifs correspondent à ce que ce programme propose : une éducation structurée et privée en technologie blockchain. Pas de trading. Pas de spéculation. Une véritable compréhension que vous appliquez dans votre travail.",
+    "result.fit.cta": "Rejoindre la liste d'attente",
+    "result.maybe.title": "Cela pourrait fonctionner pour vous.",
+    "result.maybe.desc": "Vous avez de l'expérience, et le cours s'adapte à votre niveau. L'appel de découverte nous aidera à décider ensemble si c'est le bon ajustement et rythme.",
+    "result.maybe.cta": "Réserver un appel de découverte",
+    "result.nofit.title": "Ce cours ne vous convient pas.",
+    "result.nofit.desc": "Ce programme se concentre sur la compréhension de la technologie blockchain, pas sur les stratégies de trading ou les signaux crypto quotidiens. Si votre intérêt principal change vers l'éducation technologique à l'avenir, vous êtes bienvenu de revenir.",
+    "curriculum.tag": "Le programme",
+    "curriculum.title": "Huit semaines. De zéro à confiant.",
+    "curriculum.desc": "Chaque semaine comprend une session privée d'1 heure (en personne ou en ligne), des lectures curées et un soutien inter-sessions. Le rythme s'adapte à vous.",
+    "week.w1.title": "Pourquoi Blockchain existe",
+    "week.w1.desc": "Le problème qu'il résout. Bitcoin, Ethereum et le passage des systèmes centralisés aux systèmes décentralisés. Exemples réels d'Afrique, d'Amérique latine et du Moyen-Orient.",
+    "week.w2.title": "Comment Blockchain fonctionne",
+    "week.w2.desc": "Blocs, nœuds, consensus. Chaînes publiques vs. privées. Proof of Work vs. Proof of Stake. Pas de code. Seulement des modèles mentaux.",
+    "week.w3.title": "L'écosystème Blockchain",
+    "week.w3.desc": "Chaînes principales. Tokens vs. pièces. Contrats intelligents, DeFi, NFTs, DAOs. Où les agents d'IA commencent à fonctionner en chaîne et ce que cela signifie pour votre industrie.",
+    "week.w4.title": "Usage réel et données",
+    "week.w4.desc": "Données d'adoption par région. Financement du commerce, paiements transfrontaliers, registres fonciers, chaînes d'approvisionnement. Comment l'IA est utilisée pour vérifier et automatiser les transactions en chaîne sur les marchés émergents.",
+    "week.w5.title": "RWAs et tokenisation",
+    "week.w5.desc": "Actifs du monde réel en chaîne. Matières premières, immobilier, art. Paysage réglementaire. Outils d'évaluation d'actifs et de conformité alimentés par l'IA entrant dans l'espace.",
+    "week.w6.title": "Portefeuilles et sécurité",
+    "week.w6.desc": "Portefeuilles chauds vs. froids. Configuration pratique. Phrases de base, clés privées, récupération. Prévention des escroqueries. Meilleures pratiques de sécurité.",
+    "week.w7.title": "Échanges et premiers pas",
+    "week.w7.desc": "CEX vs. DEX. KYC et intégration. Votre premier achat. Types d'ordres. Lecture d'un graphique de base. Commissions et écarts.",
+    "week.w8.title": "Votre avenir Blockchain",
+    "week.w8.desc": "Stratégie personnelle. Staking et rendement de base. Mentalité de portefeuille. Où vont la blockchain et l'IA. Une feuille de route écrite que vous emportez. Accès continu à mon réseau.",
+    "format.tag": "L'expérience",
+    "format.title": "Votre entraîneur personnel pour Blockchain",
+    "format.item1.title": "1 heure par semaine. Votre choix.",
+    "format.item1.desc": "En personne ou en ligne. Choisissez le format qui convient à votre vie. Les sessions sont planifiées selon votre fuseau horaire et votre calendrier.",
+    "format.item2.title": "Complètement privé",
+    "format.item2.desc": "Pas d'appels de groupe. Aucun enregistrement partagé. Personne d'autre n'entend vos questions. La blockchain implique de l'argent et de la stratégie. Votre apprentissage reste entre nous.",
+    "format.item3.title": "Soutien inter-sessions",
+    "format.item3.desc": "Accès direct via WhatsApp ou Telegram. Notes vocales, questions rapides, soutien en temps réel. Vous n'attendez jamais jusqu'à la semaine prochaine pour obtenir une réponse.",
+    "process.tag": "Comment ça marche",
+    "process.title": "Quatre étapes pour commencer",
+    "process.desc": "C'est un programme privé sur invitation. Les détails de tarification et de niveaux sont partagés lors de votre appel de découverte.",
+    "process.step1.title": "Faire l'évaluation",
+    "process.step1.desc": "30 secondes. Quatre questions. Découvrez si ce cours correspond à vos objectifs et antécédents.",
+    "process.step2.title": "Rejoindre la liste d'attente",
+    "process.step2.desc": "Laissez vos coordonnées. Je révise chaque demande personnellement. Aucun bot. Aucune réponse automatique.",
+    "process.step3.title": "Appel de découverte",
+    "process.step3.desc": "Une conversation de 20 minutes. Nous décidons ensemble si c'est le bon ajustement, rythme et niveau pour vous.",
+    "process.step4.title": "Commencez à apprendre",
+    "process.step4.desc": "Votre première session est programmée dans une semaine suivant l'inscription. Votre éducation blockchain commence.",
+    "data.tag": "Pourquoi c'est important",
+    "data.title": "L'écart éducatif est réel.",
+    "data.stat1": "des investisseurs en crypto sont des hommes",
+    "data.stat2": "des leaders en crypto sont des femmes",
+    "data.stat3": "des gens mondialement utilisent la blockchain",
+    "data.desc": "La blockchain remodelele commerce, la finance et la gouvernance sur les marchés émergents. Les personnes qui ont le plus besoin de la comprendre, les cadres, les fondateurs, les investisseurs, les décideurs politiques, sont les moins servies par les options éducatives actuelles. Les cours de groupe n'offrent pas de confidentialité. YouTube n'offre pas de structure. Ce programme offre les deux.",
+    "data.source": "Sources : CoinLaw 2026, Rapport mondial sur l'écart entre les genres du WEF 2025, Adoption de Blockchain DemandSage 2026",
+    "waitlist.tag": "Inscription limitée",
+    "waitlist.title": "Rejoindre la liste d'attente",
+    "waitlist.desc": "Je prends un maximum de 10 étudiants par mois pour protéger la qualité de chaque expérience. Laissez vos coordonnées et je vous contacterai personnellement pour planifier un appel de découverte de 20 minutes.",
+    "waitlist.women": "Les femmes reçoivent une réduction de 15% sur tous les niveaux. Utilisez le code WOMEN15 ou mentionnez-le lors de votre appel de découverte.",
+    "waitlist.note": "Vos informations restent privées. Pas de spam. Je réponds dans les 48 heures.",
+    "form.name": "Nom complet",
+    "form.email": "Adresse e-mail",
+    "form.company": "Entreprise ou rôle (optionnel)",
+    "form.location_placeholder": "Où êtes-vous basé?",
+    "form.africa": "Afrique",
+    "form.latam": "Amérique latine",
+    "form.middleeast": "Moyen-Orient",
+    "form.europe": "Europe",
+    "form.northamerica": "Amérique du Nord",
+    "form.asia": "Asie",
+    "form.other": "Autre",
+    "form.referral": "Comment avez-vous entendu parler de cela? (optionnel)",
+    "form.submit": "Demander un appel de découverte",
+    "success.title": "Vous êtes sur la liste.",
+    "success.desc": "Je vous contacterai dans les 48 heures pour planifier votre appel de découverte. Vérifiez votre boîte de réception. Si vous devez me contacter directement : frances@francesregina.com",
+    "footer.tagline": "Fondamentaux de la Blockchain. Éducation technologique. Pas de conseil en trading.",
+    "footer.website": "francesregina.com"
+  },
+  pt: {
+    "nav.logo": "FRANCES REGINA",
+    "nav.home": "Início",
+    "nav.about": "Sobre",
+    "nav.work": "O Que Faço",
+    "nav.contact": "Contato",
+    "nav.waitlist": "Junte-se à Lista de Espera",
+    "hero.tag": "Educação Blockchain Privada 1:1",
+    "hero.title": "Aprenda Tecnologia Blockchain.\nPrivadamente. No seu ritmo.",
+    "hero.desc": "Isto não é um curso de trading. Não é um programa em grupo. É uma hora por semana, apenas você e eu, aprendendo como a tecnologia blockchain funciona, onde se aplica e o que significa para sua indústria. Presencialmente ou online. Sua escolha.",
+    "hero.cta": "Veja se isso é para você",
+    "hero.note": "Limitado a 10 alunos por mês.",
+    "privacy.quote": "\"Sento em salas de reunião e reuniões de política onde blockchain aparece. Aceno com a cabeça. Mas não entendo completamente. E não sei a quem perguntar.\"",
+    "privacy.sub": "Ouço isso de executivos em Davos, de fundadores em Lagos, de investidores em São Paulo. Blockchain envolve seu dinheiro, sua estratégia, sua reputação. Você merece um espaço privado para aprender sem julgamento. Para isso existe este programa.",
+    "about.tag": "Seu Instrutor",
+    "about.title": "Frances Regina",
+    "about.p1": "Minha carreira começou em comércio transfronteiriço, movimentando bens e capital entre países onde a infraestrutura é fraca e a burocracia é espessa. Esse histórico me ensinou algo que a maioria dos construtores Web3 perde: mercados emergentes não precisam de mais whitepapers. Precisam de sistemas que funcionem.",
+    "about.p2": "Hoje construo infraestrutura blockchain para comércio intra-africano usando tokenização RWA e corredores stablecoin. Aconselho equipes Web3 entrando em África e América Latina. E ensino. Privadamente. Uma pessoa de cada vez. Porque os executivos, fundadores e tomadores de decisão que conheço em Davos e Token2049 dizem a mesma coisa: \"Quero entender isto, mas não sei a quem perguntar.\"",
+    "about.p3": "Agora você sabe.",
+    "about.stat1": "Idiomas. MBA em Negócios Internacionais.",
+    "about.stat2": "Países em África, América Latina e Oriente Médio",
+    "about.stat3": "Davos 2026. Token2049. Tokenização RWA.",
+    "about.stat4": "Cada sessão. Sem chamadas em grupo. Sem gravações vendidas.",
+    "assessment.tag": "Avaliação Rápida",
+    "assessment.title": "Este Curso é para Você?",
+    "assessment.intro": "Responda quatro perguntas. Leva 30 segundos. Isso nos ajuda a ambos a saber se o curso se encaixa seus objetivos.",
+    "assessment.q1": "1. Qual é seu objetivo principal?",
+    "assessment.q1a": "Quero entender a tecnologia blockchain e como se aplica à minha indústria",
+    "assessment.q1b": "Quero avaliar blockchain e IA para meu negócio ou organização",
+    "assessment.q1c": "Quero aprender a negociar cripto e ganhar dinheiro",
+    "assessment.q1d": "Preciso aconselhar clientes ou stakeholders sobre tópicos blockchain",
+    "assessment.q2": "2. Qual é seu conhecimento atual sobre blockchain?",
+    "assessment.q2a": "Começando do zero. Ouço a palavra mas não entendo a tecnologia.",
+    "assessment.q2b": "Tenho uma ideia geral, mas lacunas em minha compreensão",
+    "assessment.q2c": "Tenho cripto e uso algumas ferramentas, mas quero educação estruturada",
+    "assessment.q2d": "Já estou profundamente em cripto. Negoceio diariamente e acompanho gráficos.",
+    "assessment.q3": "3. Como você descreveria seu histórico profissional?",
+    "assessment.q3a": "Executivo, C-suite ou liderança sênior",
+    "assessment.q3b": "Finanças, lei, commodities, imóveis ou comércio",
+    "assessment.q3c": "Empresário, fundador ou investidor",
+    "assessment.q3d": "Governo, política, ONG ou organização internacional",
+    "assessment.q4": "4. Você tem 3 a 5 horas por semana durante 8 semanas?",
+    "assessment.q4a": "Sim. Estou pronto para dedicar o tempo.",
+    "assessment.q4b": "Meu horário é apertado, mas quero um ritmo flexível",
+    "assessment.q4c": "Quero algo que faço no meu próprio tempo sem sessões ao vivo",
+    "assessment.submit": "Ver meus resultados",
+    "result.fit.title": "Este curso foi feito para você.",
+    "result.fit.desc": "Seus objetivos se alinham com o que este programa oferece: educação estruturada e privada em tecnologia blockchain. Sem trading. Sem especulação. Compreensão real que você aplica no seu trabalho.",
+    "result.fit.cta": "Junte-se à Lista de Espera",
+    "result.maybe.title": "Isto poderia funcionar para você.",
+    "result.maybe.desc": "Você tem alguma experiência, e o curso se adapta ao seu nível. A chamada de descoberta nos ajudará a decidir juntos se este é o ajuste e ritmo certos.",
+    "result.maybe.cta": "Agende uma Chamada de Descoberta",
+    "result.nofit.title": "Este curso não é o ajuste certo.",
+    "result.nofit.desc": "Este programa se concentra em entender a tecnologia blockchain, não em estratégias de trading ou sinais diários de cripto. Se seu interesse principal mudar em direção à educação tecnológica no futuro, você é bem-vindo de voltar.",
+    "curriculum.tag": "O Currículo",
+    "curriculum.title": "Oito semanas. De zero a confiante.",
+    "curriculum.desc": "Cada semana inclui uma sessão privada de 1 hora (presencialmente ou online), leitura curada e suporte entre sessões. O ritmo se adapta a você.",
+    "week.w1.title": "Por que Blockchain existe",
+    "week.w1.desc": "O problema que resolve. Bitcoin, Ethereum e a mudança de sistemas centralizados para descentralizados. Exemplos reais de África, América Latina e Oriente Médio.",
+    "week.w2.title": "Como Blockchain funciona",
+    "week.w2.desc": "Blocos, nós, consenso. Cadeias públicas vs. privadas. Proof of Work vs. Proof of Stake. Sem código. Apenas modelos mentais.",
+    "week.w3.title": "O Ecossistema Blockchain",
+    "week.w3.desc": "Principais cadeias. Tokens vs. moedas. Contratos inteligentes, DeFi, NFTs, DAOs. Onde agentes de IA começam a operar na cadeia e o que isso significa para sua indústria.",
+    "week.w4.title": "Uso no mundo real e dados",
+    "week.w4.desc": "Dados de adoção por região. Financiamento comercial, pagamentos transfronteiriços, registros de terras, cadeias de suprimentos. Como a IA é usada para verificar e automatizar transações na cadeia em mercados emergentes.",
+    "week.w5.title": "RWAs e tokenização",
+    "week.w5.desc": "Ativos do mundo real na cadeia. Commodities, imóveis, arte. Paisagem regulatória. Ferramentas de valoração de ativos e conformidade alimentadas por IA entrando no espaço.",
+    "week.w6.title": "Carteiras e segurança",
+    "week.w6.desc": "Carteiras quentes vs. frias. Configuração prática. Frases de sementes, chaves privadas, recuperação. Prevenção de fraudes. Melhores práticas de segurança.",
+    "week.w7.title": "Trocas e primeiros passos",
+    "week.w7.desc": "CEX vs. DEX. KYC e integração. Sua primeira compra. Tipos de ordens. Lendo um gráfico básico. Taxas e spreads.",
+    "week.w8.title": "Seu Futuro Blockchain",
+    "week.w8.desc": "Estratégia pessoal. Noções básicas de staking e rendimento. Mentalidade de portfólio. Para onde blockchain e IA estão indo. Um roteiro escrito que você leva consigo. Acesso contínuo à minha rede.",
+    "format.tag": "A experiência",
+    "format.title": "Seu treinador pessoal para Blockchain",
+    "format.item1.title": "1 hora por semana. Sua escolha.",
+    "format.item1.desc": "Presencialmente ou online. Você escolhe o formato que funciona para sua vida. As sessões são agendadas em torno de seu fuso horário e calendário.",
+    "format.item2.title": "Completamente privado",
+    "format.item2.desc": "Sem chamadas em grupo. Sem gravações compartilhadas. Ninguém mais ouve suas perguntas. Blockchain envolve dinheiro e estratégia. Seu aprendizado fica entre nós.",
+    "format.item3.title": "Suporte entre sessões",
+    "format.item3.desc": "Acesso direto via WhatsApp ou Telegram. Notas de voz, perguntas rápidas, suporte em tempo real. Você nunca espera até a próxima semana para obter uma resposta.",
+    "process.tag": "Como funciona",
+    "process.title": "Quatro passos para começar",
+    "process.desc": "Este é um programa privado baseado em convite. Detalhes de preços e níveis são compartilhados durante sua chamada de descoberta.",
+    "process.step1.title": "Fazer a avaliação",
+    "process.step1.desc": "30 segundos. Quatro perguntas. Descubra se este curso se encaixa seus objetivos e histórico.",
+    "process.step2.title": "Junte-se à lista de espera",
+    "process.step2.desc": "Deixe seus detalhes. Reviso cada aplicação pessoalmente. Sem bots. Sem respostas automáticas.",
+    "process.step3.title": "Chamada de descoberta",
+    "process.step3.desc": "Uma conversa de 20 minutos. Decidimos juntos se este é o ajuste, ritmo e nível certos para você.",
+    "process.step4.title": "Comece a aprender",
+    "process.step4.desc": "Sua primeira sessão é agendada dentro de uma semana de inscrição. Sua educação blockchain começará.",
+    "data.tag": "Por que isso importa",
+    "data.title": "A lacuna educacional é real.",
+    "data.stat1": "dos investidores de cripto são homens",
+    "data.stat2": "dos líderes de cripto são mulheres",
+    "data.stat3": "das pessoas globalmente usam blockchain",
+    "data.desc": "Blockchain está reformulando o comércio, finanças e governança em mercados emergentes. As pessoas que mais precisam entender, executivos, fundadores, investidores, tomadores de política, são as menos servidas pelas opções educacionais atuais. Cursos em grupo não oferecem privacidade. YouTube não oferece estrutura. Este programa oferece ambas.",
+    "data.source": "Fontes: CoinLaw 2026, Relatório Global sobre Igualdade de Gênero do WEF 2025, Adoção de Blockchain DemandSage 2026",
+    "waitlist.tag": "Inscrição limitada",
+    "waitlist.title": "Junte-se à lista de espera",
+    "waitlist.desc": "Aceito no máximo 10 alunos por mês para proteger a qualidade de cada experiência. Deixe seus detalhes e entrarei em contato pessoalmente para agendar uma chamada de descoberta de 20 minutos.",
+    "waitlist.women": "Mulheres recebem desconto de 15% em todos os níveis. Use o código WOMEN15 ou mencione durante sua chamada de descoberta.",
+    "waitlist.note": "Suas informações permanecem privadas. Sem spam. Respondo dentro de 48 horas.",
+    "form.name": "Nome completo",
+    "form.email": "Endereço de e-mail",
+    "form.company": "Empresa ou função (opcional)",
+    "form.location_placeholder": "Onde você está baseado?",
+    "form.africa": "África",
+    "form.latam": "América Latina",
+    "form.middleeast": "Oriente Médio",
+    "form.europe": "Europa",
+    "form.northamerica": "América do Norte",
+    "form.asia": "Ásia",
+    "form.other": "Outro",
+    "form.referral": "Como você ficou sabendo disso? (opcional)",
+    "form.submit": "Solicitar uma chamada de descoberta",
+    "success.title": "Você está na lista.",
+    "success.desc": "Entrarei em contato dentro de 48 horas para agendar sua chamada de descoberta. Verifique sua caixa de entrada. Se precisar me contatar diretamente: frances@francesregina.com",
+    "footer.tagline": "Fundamentos de Blockchain. Educação tecnológica. Não aconselhamento de trading.",
+    "footer.website": "francesregina.com"
+  }
+};
+
+// Detect system language or get from localStorage
+function getInitialLanguage() {
+  const stored = localStorage.getItem('selectedLanguage');
+  if (stored) return stored;
+  
+  const systemLang = navigator.language.split('-')[0];
+  const supported = ['en', 'es', 'fr', 'pt'];
+  return supported.includes(systemLang) ? systemLang : 'en';
+}
+
+let currentLanguage = getInitialLanguage();
+
+// Update all translated elements
+function updateLanguage(lang) {
+  currentLanguage = lang;
+  localStorage.setItem('selectedLanguage', lang);
+  
+  // Update all elements with data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = translations[lang][key];
+      } else {
+        el.textContent = translations[lang][key];
+      }
+    }
+  });
+
+  // Update all elements with data-i18n-placeholder attribute
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang] && translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+
+  // Update select options
+  document.querySelectorAll('select option[data-i18n]').forEach(option => {
+    const key = option.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      option.textContent = translations[lang][key];
+    }
+  });
+  
+  // Update active language button
+  document.querySelectorAll('.lang-option').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+  
+  // Update HTML lang attribute
+  document.documentElement.lang = lang;
+}
+
+// Language selector event listeners
+document.querySelectorAll('.lang-option').forEach(btn => {
+  btn.addEventListener('click', function() {
+    updateLanguage(this.getAttribute('data-lang'));
+  });
+});
+
+// Initialize language on page load
+updateLanguage(currentLanguage);
+
+// ========== MOBILE NAV ==========
+var toggle = document.querySelector('.nav-toggle');
+var links = document.querySelector('.nav-links');
+
+if (toggle) {
+  toggle.addEventListener('click', function() {
+    var open = links.classList.toggle('open');
+    toggle.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+}
+
+// ========== QUIZ LOGIC ==========
+var quizAnswers = {};
+
+function selectOption(el, q, val) {
+  var siblings = el.parentElement.querySelectorAll('.quiz-option');
+  siblings.forEach(function(s) { s.classList.remove('selected'); });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  quizAnswers[q] = val;
+
+  if (Object.keys(quizAnswers).length >= 4) {
+    document.getElementById('quizSubmit').disabled = false;
+  }
+}
+
+function showResult() {
+  var a = quizAnswers;
+  var container = document.getElementById('quizContainer');
+  container.style.display = 'none';
+
+  var isTrader = (a[1] === 'trade');
+  var isAdvanced = (a[2] === 'advanced' && a[1] === 'trade');
+  var noLive = (a[4] === 'no');
+
+  if (isTrader || isAdvanced) {
+    document.getElementById('resultNoFit').style.display = 'block';
+  } else if (noLive || (a[2] === 'advanced')) {
+    document.getElementById('resultMaybe').style.display = 'block';
+  } else {
+    document.getElementById('resultFit').style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>
