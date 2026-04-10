@@ -78,17 +78,18 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function handler(req, res) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', 'https://francesregina.com');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+  // Handle preflight requests
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
+  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method not allowed' });
   }
@@ -96,6 +97,7 @@ export default async function handler(req, res) {
   try {
     const { name, email, message, language } = req.body;
 
+    // Validate inputs
     if (!name || !email || !message) {
       return res.status(400).json({ 
         success: false, 
@@ -125,8 +127,13 @@ export default async function handler(req, res) {
     };
 
     // Send both emails
+    console.log(`Sending email to frances@francesregina.com...`);
     await transporter.sendMail(francesEmail);
+    console.log(`Email to Frances sent`);
+
+    console.log(`Sending auto-reply to ${email}...`);
     await transporter.sendMail(visitorEmail);
+    console.log(`Auto-reply sent to visitor`);
 
     res.status(200).json({ 
       success: true, 
