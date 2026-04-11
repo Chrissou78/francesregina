@@ -19,6 +19,8 @@
       --charcoal:    #111820;
       --text-body:   #1E2D40;
       --text-muted:  #5A6878;
+      --soft-white:  #FEFDFB;
+      --warm-gray:   #8B8680;
     }
 
     html { scroll-behavior: smooth; font-size: 16px; }
@@ -37,7 +39,7 @@
     a:hover { color: var(--navy); }
 
     .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 96px 0; }
+    section { padding: 96px 24px; margin: 0 auto; max-width: 100%; }
 
     .section-label {
       font-size: 0.72rem;
@@ -62,7 +64,7 @@
     }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 768px) { section { padding: 60px 0; } }
+    @media (max-width: 768px) { section { padding: 60px 20px; } }
 
     @media (prefers-reduced-motion: reduce) {
       .fade-in { opacity: 1; transform: none; transition: none; }
@@ -184,64 +186,6 @@
     }
 
     .nav-item:hover {
-      color: var(--gold);
-    }
-
-    .nav-dropdown-toggle {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .nav-dropdown-toggle svg {
-      transition: transform 0.3s;
-      width: 14px;
-      height: 14px;
-    }
-
-    /* Submenu */
-    .nav-submenu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border: 1px solid rgba(26, 46, 74, 0.1);
-      border-radius: 6px;
-      padding: 0.5rem 0;
-      min-width: 180px;
-      box-shadow: 0 4px 12px rgba(26, 46, 74, 0.1);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      pointer-events: none;
-      margin-top: 0.5rem;
-    }
-
-    .nav-main:hover .nav-submenu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .nav-main:hover .nav-dropdown-toggle svg {
-      transform: rotate(180deg);
-    }
-
-    .nav-subitem {
-      display: block;
-      padding: 0.75rem 1.5rem;
-      color: var(--navy);
-      text-decoration: none;
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
-
-    .nav-subitem:hover {
-      background: rgba(201, 168, 76, 0.1);
       color: var(--gold);
     }
 
@@ -376,33 +320,6 @@
         font-weight: 400;
       }
 
-      .nav-submenu {
-        position: static;
-        opacity: 0;
-        visibility: hidden;
-        transform: none;
-        max-height: 0;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        box-shadow: none;
-        border: none;
-        background: rgba(26, 46, 74, 0.03);
-        padding: 0;
-        margin: 0;
-      }
-
-      .nav-submenu.active {
-        opacity: 1;
-        visibility: visible;
-        max-height: 300px;
-        padding: 0.5rem 0;
-      }
-
-      .nav-subitem {
-        padding: 0.75rem 3rem;
-        border-bottom: 1px solid rgba(26, 46, 74, 0.05);
-      }
-
       .nav-languages {
         width: 100%;
         border-top: 1px solid rgba(26, 46, 74, 0.1);
@@ -445,24 +362,46 @@
     .hero {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      text-align: center;
+      justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, var(--cream) 0%, var(--cream-warm) 100%);
       position: relative;
       overflow: hidden;
       padding-top: 70px;
+      padding-bottom: 80px;
+      padding-left: 24px;
+      padding-right: 24px;
+      max-width: 100%;
+    }
+
+    .hero p:first-of-type {
+      text-align: center;
+      max-width: 100%;
     }
 
     .hero h1 {
       font-size: clamp(2rem, 5vw, 2.8rem);
       color: var(--navy);
       margin-bottom: 1.5rem;
+      text-align: center;
       font-weight: 400;
+      max-width: 800px;
+    }
+
+    .hero > p:nth-child(3) {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero .subtitle {
       font-size: 1.25rem;
       color: var(--text-muted);
+      text-align: center;
       margin-bottom: 2rem;
+      max-width: 800px;
     }
 
     .hero p {
@@ -496,12 +435,6 @@
     }
 
     /* ── CONTENT SECTIONS ── */
-    section {
-      padding: 96px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
     section h2 {
       font-size: clamp(1.9rem, 3.5vw, 2.8rem);
       color: var(--navy);
@@ -522,6 +455,13 @@
       color: var(--text-body);
       margin-bottom: 1.5rem;
       line-height: 1.8;
+    }
+
+    section {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      max-width: 1100px;
     }
 
     /* ── CARDS GRID ── */
@@ -572,7 +512,8 @@
       background: var(--cream-warm);
       border-radius: 0;
       padding: 28px;
-      margin: 2rem 0;
+      margin: 2rem auto;
+      max-width: 800px;
     }
 
     .question {
@@ -783,115 +724,14 @@
       letter-spacing: 0.04em;
     }
 
-    /* ── SUCCESS PAGE SPECIFIC ── */
-    main {
-      min-height: calc(100vh - 70px);
-      display: flex;
-      flex-direction: column;
-      padding-top: 70px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 60px 24px;
-      width: 100%;
-      flex: 1;
-    }
-
-    .hero-thank-you {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .checkmark-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 2rem;
-      background: var(--gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      color: white;
-      animation: bounce 0.8s ease-out;
-    }
-
-    @keyframes bounce {
-      0% { opacity: 0; transform: scale(0.3) translateY(20px); }
-      50% { opacity: 1; }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .thank-you-heading {
-      font-size: 2.4rem;
-      color: var(--navy);
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-    }
-
-    .thank-you-message {
-      font-size: 1.05rem;
-      color: var(--text-body);
-      max-width: 660px;
-      margin: 0 auto 3rem;
-      line-height: 1.85;
-    }
-
-    .calendar-section {
-      margin-bottom: 3rem;
-    }
-
-    .calendar-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      display: block;
-      text-align: center;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    #cal-embed {
-      min-height: 600px;
-      background: white;
-      border: 1px solid rgba(26, 46, 74, 0.1);
-      border-radius: 0;
-      padding: 24px;
-      box-shadow: 0 2px 8px rgba(26, 46, 74, 0.08);
-    }
-
-    .calendar-note {
-      text-align: center;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-top: 2rem;
-      line-height: 1.75;
-    }
-
-    .calendar-note a {
-      color: var(--gold);
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .calendar-note a:hover {
-      color: var(--gold-light);
-    }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      section {
-        padding: 60px 20px;
-      }
-
       .hero {
-        padding-top: 60px;
-        padding: 60px 20px;
         min-height: auto;
+        padding-top: 60px;
+        padding-bottom: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
       .hero h1 {
@@ -928,32 +768,23 @@
         gap: 20px;
       }
 
-      .container {
-        padding: 40px 20px;
-      }
-
-      .thank-you-heading {
-        font-size: 1.8rem;
-      }
-
-      .thank-you-message {
-        font-size: 1rem;
-      }
-
-      #cal-embed {
-        min-height: 400px;
-        padding: 16px;
-      }
-
-      main {
-        min-height: calc(100vh - 60px);
-        padding-top: 60px;
+      .assessment {
+        padding: 20px;
       }
     }
 
     :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
     .hidden { display: none; }
+
+    blockquote {
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--navy);
+      margin: 2rem 0;
+      border-left: 4px solid var(--gold);
+      padding-left: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -1010,9 +841,7 @@
 
   <!-- Opening Quote -->
   <section style="background: var(--soft-white); text-align: center;">
-    <blockquote style="font-size: 1.3rem; font-style: italic; color: var(--dark); margin: 2rem 0; border-left: 4px solid var(--gold); padding-left: 2rem;">
-      <p data-i18n="course.quote">"I sit in boardrooms and policy meetings where blockchain comes up. I nod. But I don't fully understand it. And I don't know who to ask."</p>
-    </blockquote>
+    <blockquote data-i18n="course.quote">"I sit in boardrooms and policy meetings where blockchain comes up. I nod. But I don't fully understand it. And I don't know who to ask."</blockquote>
     <p data-i18n="course.quote.context">I hear this from executives at Davos, from founders in Lagos, from investors in São Paulo. Blockchain involves your money, your strategy, your reputation. You deserve a private space to learn without judgment. That is what this program exists for.</p>
   </section>
 
@@ -1128,7 +957,7 @@
       </div>
     </div>
 
-    <div id="assessmentResult" style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 8px; display: none;">
+    <div id="assessmentResult" style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 8px; display: none; max-width: 800px; margin-left: auto; margin-right: auto;">
       <div id="resultContent"></div>
       <button class="cta-button" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})" style="margin-top: 1.5rem;" data-i18n="course.assessment.cta">Join the Waitlist</button>
     </div>
@@ -1738,7 +1567,7 @@
         'course.waitlist.title': 'Inscrição Limitada',
         'course.waitlist.subtitle': 'Junte-se à Lista de Espera',
         'course.waitlist.description': 'Tomo um máximo de 10 alunos por mês para proteger a qualidade de cada experiência. Deixe seus detalhes e entrarei em contato pessoalmente para agendar uma chamada de descoberta de 20 minutos.',
-        'course.waitlist.discount': 'As mulheres recebem um desconto de 15% em todos os níveis. Use o código WOMEN15 ou mencione-o durante sua chamada de descoberta.',
+        'course.waitlist.discount': 'As mulheres recebem um descuento de 15% em todos os níveis. Use o código WOMEN15 ou mencione-o durante sua chamada de descoberta.',
         'course.waitlist.note': 'Suas informações são privadas. Sem spam. Respondo em até 48 horas.',
         'form.name': 'Nome',
         'form.email': 'Email',
@@ -1749,7 +1578,6 @@
 
     let currentLanguage = 'en';
 
-    // ========== LANGUAGE DETECTION & INIT ==========
     function initializeLanguage() {
       const stored = localStorage.getItem('selectedLanguage');
       if (stored) {
@@ -1766,7 +1594,6 @@
     function setLanguage(lang) {
       currentLanguage = lang;
       localStorage.setItem('selectedLanguage', lang);
-      
       document.documentElement.lang = lang;
       document.title = translations[lang]['page.title'];
       
@@ -1785,10 +1612,8 @@
       });
     }
 
-    // ========== NAVBAR MENU TOGGLE ==========
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
-    const navbar = document.getElementById('navbar');
     const langToggle = document.getElementById('langToggle');
     const langSubmenu = document.getElementById('langSubmenu');
     const langBtns = document.querySelectorAll('.lang-btn');
@@ -1830,12 +1655,10 @@
       });
     });
 
-    // ========== SCROLL EFFECT ==========
     window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 20);
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
     });
 
-    // ========== ASSESSMENT LOGIC ==========
     const assessmentInputs = document.querySelectorAll('input[name="goal"], input[name="knowledge"], input[name="background"], input[name="time"]');
     assessmentInputs.forEach(input => {
       input.addEventListener('change', () => {
@@ -1863,7 +1686,6 @@
       });
     });
 
-    // ========== FORM HANDLING ==========
     const form = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
@@ -1891,12 +1713,7 @@
 
         submitBtn.disabled = true;
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = {
-          pt: 'Enviando...',
-          es: 'Enviando...',
-          fr: 'Envoi...',
-          en: 'Sending...'
-        }[currentLanguage];
+        submitBtn.textContent = { pt: 'Enviando...', es: 'Enviando...', fr: 'Envoi...', en: 'Sending...' }[currentLanguage];
 
         try {
           const response = await fetch('https://francesregina.vercel.app/api/contact', {
@@ -1908,12 +1725,7 @@
           const result = await response.json();
 
           if (result.success) {
-            formStatus.textContent = {
-              pt: 'Obrigada! Você receberá um e-mail em breve.',
-              es: '¡Gracias! Recibirás un correo pronto.',
-              fr: 'Merci! Vous recevrez un e-mail bientôt.',
-              en: "Thank you! You'll receive an email soon."
-            }[currentLanguage];
+            formStatus.textContent = { pt: 'Obrigada! Você receberá um e-mail em breve.', es: '¡Gracias! Recibirás un correo pronto.', fr: 'Merci! Vous recevrez un e-mail bientôt.', en: "Thank you! You'll receive an email soon." }[currentLanguage];
             formStatus.className = 'success';
             form.reset();
             formStatus.style.display = 'block';
@@ -1924,12 +1736,7 @@
             throw new Error(result.message || 'Unknown error');
           }
         } catch (err) {
-          formStatus.textContent = {
-            pt: 'Erro ao enviar. Tente novamente.',
-            es: 'Error al enviar. Inténtelo de nuevo.',
-            fr: 'Erreur lors de l\'envoi. Réessayez.',
-            en: 'Error sending. Please try again.'
-          }[currentLanguage];
+          formStatus.textContent = { pt: 'Erro ao enviar. Tente novamente.', es: 'Error al enviar. Inténtelo de nuevo.', fr: 'Erreur lors de l\'envoi. Réessayez.', en: 'Error sending. Please try again.' }[currentLanguage];
           formStatus.className = 'error';
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
@@ -1938,7 +1745,6 @@
       });
     }
 
-    // ========== INIT ON LOAD ==========
     initializeLanguage();
   </script>
 </body>
